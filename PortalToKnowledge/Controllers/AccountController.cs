@@ -20,7 +20,7 @@ namespace PortalToKnowledge.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-		private DbContext db;
+		
 
 		public AccountController()
         {
@@ -145,10 +145,10 @@ namespace PortalToKnowledge.Controllers
         {
 			ApplicationDbContext db = new ApplicationDbContext();
 			var roles = db.Roles.ToList();
-			RegisterViewModel rvm = new RegisterViewModel();
+			RegisterViewModel rvm = new RegisterViewModel()
 			{
-				AspNetRoles = roles;
-			}/*;*/
+				AspNetRoles = roles
+			};
 			return View(rvm);
         }
 
@@ -159,10 +159,11 @@ namespace PortalToKnowledge.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+			ApplicationDbContext db = new ApplicationDbContext();
+			if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Role = model.Role };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var result = UserManager.Create(user, model.Password);
 
 				var roleStore = new RoleStore<IdentityRole>(db);
 				var roleManager = new RoleManager<IdentityRole>(roleStore);
@@ -170,21 +171,72 @@ namespace PortalToKnowledge.Controllers
 				var userStore = new UserStore<ApplicationUser>(db);
 				var userManager = new UserManager<ApplicationUser>(userStore);
 
-				
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+				if (model.Role == "Student")
+				{
+					userManager.AddToRole(user.Id, "Student");
 
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
-            }
+					if (result.Succeeded)
+					{
+						await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+						// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+						// Send an email with this link
+						// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+						// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+						// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+						return RedirectToAction("Create", "Students");
+					}
+					AddErrors(result);
+				}
+				else if (model.Role == "Instructor")
+				{
+					userManager.AddToRole(user.Id, "Instructor");
+
+					if (result.Succeeded)
+					{
+						await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+						// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+						// Send an email with this link
+						// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+						// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+						// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+						return RedirectToAction("Create", "Instructors");
+					}
+					AddErrors(result);
+				}
+				else if (model.Role == "Admin")
+				{
+					userManager.AddToRole(user.Id, "Admin");
+
+					if (result.Succeeded)
+					{
+						await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+						// For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+						// Send an email with this link
+						// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+						// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+						// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+						return RedirectToAction("Create", "Admins");
+					}
+					AddErrors(result);
+				}
+				else
+				{
+					return View(model);
+				}
+
+				if(result.Succeeded)
+				{
+					await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+					return RedirectToAction("Index", "Home");
+				}
+				AddErrors(result);
+			}
 
             // If we got this far, something failed, redisplay form
             return View(model);

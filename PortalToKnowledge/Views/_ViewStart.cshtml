@@ -1,3 +1,18 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (User.IsInRole("Student"))
+    {
+        Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    }
+    else if (User.IsInRole("Instructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 }
