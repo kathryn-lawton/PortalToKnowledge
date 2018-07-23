@@ -3,6 +3,7 @@ using PortalToKnowledge.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,21 +16,20 @@ namespace PortalToKnowledge.Controllers
         // GET: Students
         public ActionResult Index()
         {
-            return View();
+			var students = db.Student.ToList();	
+			return View(students);
         }
 
 		// GET: Students/Create
 		[HttpGet]
 		public ActionResult Create()
 		{
-			Student student = new Student();
-
-			return View(student);
+			return View();
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create([Bind(Include = "StudentId, FirstName, LastName")] Student student)
+		public ActionResult Create([Bind(Include = "StudentId, FirstName, LastName, ApplicationUserId")] Student student)
 		{
 			if (ModelState.IsValid)
 			{
@@ -40,6 +40,50 @@ namespace PortalToKnowledge.Controllers
 			}
 
 			return View(student);
+		}
+
+		public ActionResult Details(int? id)
+		{
+			Student student;
+			if (id == null)
+			{
+				var currentUserId = User.Identity.GetUserId();
+				if(currentUserId == null)
+				{
+					return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				}
+				student = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
+			}
+			else
+			{
+				student = db.Student.Where(s => s.StudentId == id).FirstOrDefault();
+			}
+
+			if (student == null)
+			{
+				return HttpNotFound();
+			}
+			return View(student);
+		}
+
+		//public ActionResult Edit()
+		//{
+
+		//}
+
+		public ActionResult Classes()
+		{
+			return View();
+		}
+
+		public ActionResult Flashcards()
+		{
+			return View();
+		}
+
+		public ActionResult Notes()
+		{
+			return View();
 		}
 	}
 }

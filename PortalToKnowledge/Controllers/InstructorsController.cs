@@ -15,16 +15,15 @@ namespace PortalToKnowledge.Controllers
 		// GET: Instructors
         public ActionResult Index()
         {
-            return View();
+			var instructors = db.Instrutor.ToList();
+            return View(instructors);
         }
 
 		// GET: Instructors/Create
 		[HttpGet]
 		public ActionResult Create()
 		{
-			Instructor instructor = new Instructor();
-
-			return View(instructor);
+			return View();
 		}
 
 		[HttpPost]

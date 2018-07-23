@@ -203,13 +203,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807201335318_InitialCreate.cs" />
-    <Compile Include="Migrations\201807201335318_InitialCreate.Designer.cs">
-      <DependentUpon>201807201335318_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807201830304_initialmigration.cs" />
-    <Compile Include="Migrations\201807201830304_initialmigration.Designer.cs">
-      <DependentUpon>201807201830304_initialmigration.cs</DependentUpon>
+    <Compile Include="Migrations\201807231455398_initialmigration.cs" />
+    <Compile Include="Migrations\201807231455398_initialmigration.Designer.cs">
+      <DependentUpon>201807231455398_initialmigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -281,7 +277,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admins\Index.cshtml" />
     <Content Include="Views\Instructors\Index.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutStudent.cshtml" />
@@ -289,7 +285,12 @@
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Instructors\Create.cshtml" />
     <Content Include="Views\Students\Create.cshtml" />
-    <Content Include="Views\Admin\Create.cshtml" />
+    <Content Include="Views\Admins\Create.cshtml" />
+    <Content Include="Views\Students\Details.cshtml" />
+    <Content Include="Views\Students\Classes.cshtml" />
+    <Content Include="Views\Students\Flashcards.cshtml" />
+    <Content Include="Views\Students\Notes.cshtml" />
+    <Content Include="Views\Instructors\Classes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -308,11 +309,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807201335318_InitialCreate.resx">
-      <DependentUpon>201807201335318_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807201830304_initialmigration.resx">
-      <DependentUpon>201807201830304_initialmigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807231455398_initialmigration.resx">
+      <DependentUpon>201807231455398_initialmigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

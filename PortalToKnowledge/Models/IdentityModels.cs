@@ -35,5 +35,5 @@ namespace PortalToKnowledge.Models
 		public DbSet<Student> Student { get; set; }
 		public DbSet<Instructor> Instrutor { get; set; }
 		public DbSet<Admin> Admin { get; set; }
-    }
+	}
 }

@@ -14,16 +14,15 @@ namespace PortalToKnowledge.Controllers
 		// GET: Admin
 		public ActionResult Index()
 		{
-			return View();
+			var admins = db.Admin.ToList();
+			return View(admins);
 		}
 
 		// GET: Admins/Create
 		[HttpGet]
 		public ActionResult Create()
 		{
-			Admin admin = new Admin();
-
-			return View(admin);
+			return View();
 		}
 
 		[HttpPost]
