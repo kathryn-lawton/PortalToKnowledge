@@ -63,7 +63,33 @@ namespace PortalToKnowledge.Controllers
 			db.Class.Add(model);
 			db.SaveChanges();
 
-			return RedirectToAction("Details", "Class", new { id = model.ClassId });
+			return RedirectToAction("Index", "Classes");
+			//return RedirectToAction("Details", "Class", new { id = model.ClassId });
 		}
+
+		[HttpGet]
+		public ActionResult CreateMedia()
+		{
+			return View();
+		}
+
+		//[HttpPost]
+		//[ValidateAntiForgeryToken]
+		//public ActionResult CreateMedia(Media model)
+		//{
+		//	var currentUserId = User.Identity.GetUserId();
+		//	var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
+
+		//	if (foundInstructor == null)
+		//	{
+		//		return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+		//	}
+
+		//	foundInstructor.Classes.ToList();
+		//	//get class instructor wants to add link to
+		//	//instructor selects type from drop dowm
+		//	//instructor adds
+		}
+
 	}
 }
