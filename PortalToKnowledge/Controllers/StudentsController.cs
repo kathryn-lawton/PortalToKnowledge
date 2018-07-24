@@ -66,10 +66,33 @@ namespace PortalToKnowledge.Controllers
 			return View(student);
 		}
 
-		//public ActionResult Edit()
-		//{
-
-		//}
+		[HttpGet]
+		public ActionResult Edit(int? id)
+		{
+			if (id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			Student student = db.Student.Find(id);
+			if (student == null)
+			{
+				return HttpNotFound();
+			}
+			return View(student);
+		}
+		
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Edit([Bind(Include = "StudentId, FirstName, LastName")] Student student)
+		{
+			if (ModelState.IsValid)
+			{
+				db.Entry(student).State = System.Data.Entity.EntityState.Modified;
+				db.SaveChanges();
+				return RedirectToAction("Index");
+			}
+			return View(student);
+		}
 
 		public ActionResult Classes()
 		{

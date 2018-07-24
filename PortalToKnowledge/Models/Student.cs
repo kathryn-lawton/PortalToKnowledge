@@ -18,6 +18,10 @@ namespace PortalToKnowledge.Models
 		[Display(Name = "Last Name")]
 		public string LastName { get; set; }
 
+		[ForeignKey("Instructor")]
+		public int InstructorId { get; set; }
+		public Instructor Instructor { get; set; }
+
 		[ForeignKey("ApplicationUser")]
 		public string ApplicationUserId { get; set; }
 		public ApplicationUser ApplicationUser { get; set; }

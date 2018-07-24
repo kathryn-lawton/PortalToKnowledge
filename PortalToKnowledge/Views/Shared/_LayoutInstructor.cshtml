@@ -23,7 +23,6 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Current Students", "Index", "Students")</li>
                     <li>@Html.ActionLink("Class Manager", "Classes", "Instructor")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -33,7 +32,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - P2K</p>
         </footer>
     </div>
 

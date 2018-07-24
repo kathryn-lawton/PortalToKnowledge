@@ -196,6 +196,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminsController.cs" />
+    <Compile Include="Controllers\ClassesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -203,16 +204,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201807231455398_initialmigration.cs" />
-    <Compile Include="Migrations\201807231455398_initialmigration.Designer.cs">
-      <DependentUpon>201807231455398_initialmigration.cs</DependentUpon>
+    <Compile Include="Migrations\201807240301471_initialmigration.cs" />
+    <Compile Include="Migrations\201807240301471_initialmigration.Designer.cs">
+      <DependentUpon>201807240301471_initialmigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Class.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Instructor.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Media.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -290,7 +293,13 @@
     <Content Include="Views\Students\Classes.cshtml" />
     <Content Include="Views\Students\Flashcards.cshtml" />
     <Content Include="Views\Students\Notes.cshtml" />
-    <Content Include="Views\Instructors\Classes.cshtml" />
+    <Content Include="Views\Instructors\CreateClass.cshtml" />
+    <Content Include="Views\Students\Edit.cshtml" />
+    <Content Include="Views\Classes\Create.cshtml" />
+    <Content Include="Views\Classes\Delete.cshtml" />
+    <Content Include="Views\Classes\Details.cshtml" />
+    <Content Include="Views\Classes\Edit.cshtml" />
+    <Content Include="Views\Classes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -309,8 +318,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807231455398_initialmigration.resx">
-      <DependentUpon>201807231455398_initialmigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807240301471_initialmigration.resx">
+      <DependentUpon>201807240301471_initialmigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

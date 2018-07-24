@@ -80,6 +80,15 @@ namespace PortalToKnowledge.Migrations
                 .Index(t => t.RoleId);
             
             CreateTable(
+                "dbo.Classes",
+                c => new
+                    {
+                        ClassId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.ClassId);
+            
+            CreateTable(
                 "dbo.Instructors",
                 c => new
                     {
@@ -93,6 +102,35 @@ namespace PortalToKnowledge.Migrations
                 .Index(t => t.ApplicationUserId);
             
             CreateTable(
+                "dbo.Students",
+                c => new
+                    {
+                        StudentId = c.Int(nullable: false, identity: true),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        InstructorId = c.Int(nullable: false),
+                        ApplicationUserId = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.StudentId)
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserId)
+                .ForeignKey("dbo.Instructors", t => t.InstructorId, cascadeDelete: true)
+                .Index(t => t.InstructorId)
+                .Index(t => t.ApplicationUserId);
+            
+            CreateTable(
+                "dbo.Media",
+                c => new
+                    {
+                        MediaId = c.Int(nullable: false, identity: true),
+                        Type = c.String(),
+                        Link = c.String(),
+                        ClassId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.MediaId)
+                .ForeignKey("dbo.Classes", t => t.ClassId, cascadeDelete: true)
+                .Index(t => t.ClassId);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -103,31 +141,39 @@ namespace PortalToKnowledge.Migrations
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
-                "dbo.Students",
+                "dbo.InstructorClasses",
                 c => new
                     {
-                        StudentId = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                        ApplicationUserId = c.String(maxLength: 128),
+                        Instructor_InstructorId = c.Int(nullable: false),
+                        Class_ClassId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.StudentId)
-                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserId)
-                .Index(t => t.ApplicationUserId);
+                .PrimaryKey(t => new { t.Instructor_InstructorId, t.Class_ClassId })
+                .ForeignKey("dbo.Instructors", t => t.Instructor_InstructorId, cascadeDelete: true)
+                .ForeignKey("dbo.Classes", t => t.Class_ClassId, cascadeDelete: true)
+                .Index(t => t.Instructor_InstructorId)
+                .Index(t => t.Class_ClassId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Students", "ApplicationUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Media", "ClassId", "dbo.Classes");
+            DropForeignKey("dbo.Students", "InstructorId", "dbo.Instructors");
+            DropForeignKey("dbo.Students", "ApplicationUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.InstructorClasses", "Class_ClassId", "dbo.Classes");
+            DropForeignKey("dbo.InstructorClasses", "Instructor_InstructorId", "dbo.Instructors");
             DropForeignKey("dbo.Instructors", "ApplicationUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Admins", "ApplicationUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropIndex("dbo.Students", new[] { "ApplicationUserId" });
+            DropIndex("dbo.InstructorClasses", new[] { "Class_ClassId" });
+            DropIndex("dbo.InstructorClasses", new[] { "Instructor_InstructorId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Media", new[] { "ClassId" });
+            DropIndex("dbo.Students", new[] { "ApplicationUserId" });
+            DropIndex("dbo.Students", new[] { "InstructorId" });
             DropIndex("dbo.Instructors", new[] { "ApplicationUserId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
@@ -135,9 +181,12 @@ namespace PortalToKnowledge.Migrations
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Admins", new[] { "ApplicationUserId" });
-            DropTable("dbo.Students");
+            DropTable("dbo.InstructorClasses");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Media");
+            DropTable("dbo.Students");
             DropTable("dbo.Instructors");
+            DropTable("dbo.Classes");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");

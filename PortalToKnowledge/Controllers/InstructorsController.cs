@@ -3,6 +3,7 @@ using PortalToKnowledge.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -39,6 +40,30 @@ namespace PortalToKnowledge.Controllers
 			}
 
 			return View(instructor);
+		}
+
+		[HttpGet]
+		public ActionResult CreateClass()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult CreateClass(Class model)
+		{
+			var currentUserId = User.Identity.GetUserId();
+			var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
+
+			if(foundInstructor == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			model.Instructors.Add(foundInstructor);
+			db.Class.Add(model);
+			db.SaveChanges();
+
+			return RedirectToAction("Details", "Class", new { id = model.ClassId });
 		}
 	}
 }
