@@ -85,8 +85,11 @@ namespace PortalToKnowledge.Migrations
                     {
                         ClassId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
+                        InstructorId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.ClassId);
+                .PrimaryKey(t => t.ClassId)
+                .ForeignKey("dbo.Instructors", t => t.InstructorId, cascadeDelete: true)
+                .Index(t => t.InstructorId);
             
             CreateTable(
                 "dbo.Instructors",
@@ -99,22 +102,6 @@ namespace PortalToKnowledge.Migrations
                     })
                 .PrimaryKey(t => t.InstructorId)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserId)
-                .Index(t => t.ApplicationUserId);
-            
-            CreateTable(
-                "dbo.Students",
-                c => new
-                    {
-                        StudentId = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                        InstructorId = c.Int(nullable: false),
-                        ApplicationUserId = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => t.StudentId)
-                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserId)
-                .ForeignKey("dbo.Instructors", t => t.InstructorId, cascadeDelete: true)
-                .Index(t => t.InstructorId)
                 .Index(t => t.ApplicationUserId);
             
             CreateTable(
@@ -142,6 +129,19 @@ namespace PortalToKnowledge.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.Students",
+                c => new
+                    {
+                        StudentId = c.Int(nullable: false, identity: true),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        ApplicationUserId = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.StudentId)
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserId)
+                .Index(t => t.ApplicationUserId);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -152,16 +152,16 @@ namespace PortalToKnowledge.Migrations
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
-                "dbo.InstructorClasses",
+                "dbo.StudentClasses",
                 c => new
                     {
-                        Instructor_InstructorId = c.Int(nullable: false),
+                        Student_StudentId = c.Int(nullable: false),
                         Class_ClassId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Instructor_InstructorId, t.Class_ClassId })
-                .ForeignKey("dbo.Instructors", t => t.Instructor_InstructorId, cascadeDelete: true)
+                .PrimaryKey(t => new { t.Student_StudentId, t.Class_ClassId })
+                .ForeignKey("dbo.Students", t => t.Student_StudentId, cascadeDelete: true)
                 .ForeignKey("dbo.Classes", t => t.Class_ClassId, cascadeDelete: true)
-                .Index(t => t.Instructor_InstructorId)
+                .Index(t => t.Student_StudentId)
                 .Index(t => t.Class_ClassId);
             
         }
@@ -169,36 +169,36 @@ namespace PortalToKnowledge.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.StudentClasses", "Class_ClassId", "dbo.Classes");
+            DropForeignKey("dbo.StudentClasses", "Student_StudentId", "dbo.Students");
+            DropForeignKey("dbo.Students", "ApplicationUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Media", "MediaTypeId", "dbo.MediaTypes");
             DropForeignKey("dbo.Media", "ClassId", "dbo.Classes");
-            DropForeignKey("dbo.Students", "InstructorId", "dbo.Instructors");
-            DropForeignKey("dbo.Students", "ApplicationUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.InstructorClasses", "Class_ClassId", "dbo.Classes");
-            DropForeignKey("dbo.InstructorClasses", "Instructor_InstructorId", "dbo.Instructors");
+            DropForeignKey("dbo.Classes", "InstructorId", "dbo.Instructors");
             DropForeignKey("dbo.Instructors", "ApplicationUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Admins", "ApplicationUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropIndex("dbo.InstructorClasses", new[] { "Class_ClassId" });
-            DropIndex("dbo.InstructorClasses", new[] { "Instructor_InstructorId" });
+            DropIndex("dbo.StudentClasses", new[] { "Class_ClassId" });
+            DropIndex("dbo.StudentClasses", new[] { "Student_StudentId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Students", new[] { "ApplicationUserId" });
             DropIndex("dbo.Media", new[] { "MediaTypeId" });
             DropIndex("dbo.Media", new[] { "ClassId" });
-            DropIndex("dbo.Students", new[] { "ApplicationUserId" });
-            DropIndex("dbo.Students", new[] { "InstructorId" });
             DropIndex("dbo.Instructors", new[] { "ApplicationUserId" });
+            DropIndex("dbo.Classes", new[] { "InstructorId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Admins", new[] { "ApplicationUserId" });
-            DropTable("dbo.InstructorClasses");
+            DropTable("dbo.StudentClasses");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Students");
             DropTable("dbo.MediaTypes");
             DropTable("dbo.Media");
-            DropTable("dbo.Students");
             DropTable("dbo.Instructors");
             DropTable("dbo.Classes");
             DropTable("dbo.AspNetUserRoles");

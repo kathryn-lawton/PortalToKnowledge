@@ -29,6 +29,7 @@ namespace PortalToKnowledge.Migrations
 					new MediaType { Type = "Document" }
 					);
 
+
 		}
 	}
 }

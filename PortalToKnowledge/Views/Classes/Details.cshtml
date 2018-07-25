@@ -11,11 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Instructor.FirstName)
+            @Html.DisplayNameFor(model => model.Instructor)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Instructor.FirstName)
+            @Html.DisplayFor(model => model.Instructor.FirstName) @Html.DisplayFor(model => model.Instructor.LastName)
         </dd>
 
         <dt>
@@ -26,9 +26,28 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
 
+        <dt>
+            Students:
+        </dt>
+        <dd></dd>
+
+        @foreach(var student in Model.Students)
+        {
+            <dt></dt>
+
+            <dd>
+                @student.FirstName @student.LastName @Html.ActionLink("Remove", "RemoveStudent", new { id = student.StudentId })
+            </dd>
+        }
+        <dt>
+
+        </dt>
+
+
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ClassId }) |
+    @Html.ActionLink("Add Students", "AddStudent", new { id = Model.ClassId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
