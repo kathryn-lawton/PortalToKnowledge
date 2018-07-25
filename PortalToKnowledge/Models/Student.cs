@@ -28,5 +28,10 @@ namespace PortalToKnowledge.Models
 		public ApplicationUser ApplicationUser { get; set; }
 
 		public virtual ICollection<Class> Classes { get; set; }
+
+		[ForeignKey("Progress")]
+		public int ProgressId { get; set; }
+		public Progress Progress { get; set; }
+
 	}
 }

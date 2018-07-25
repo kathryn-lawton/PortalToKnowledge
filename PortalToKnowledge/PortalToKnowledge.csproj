@@ -197,22 +197,20 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminsController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
+    <Compile Include="Controllers\ClassTasksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProgressesController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Keys.cs" />
-    <Compile Include="Migrations\201807251256077_initialmigration.cs" />
-    <Compile Include="Migrations\201807251256077_initialmigration.Designer.cs">
-      <DependentUpon>201807251256077_initialmigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807251351046_displaynamemig.cs" />
-    <Compile Include="Migrations\201807251351046_displaynamemig.Designer.cs">
-      <DependentUpon>201807251351046_displaynamemig.cs</DependentUpon>
+    <Compile Include="Migrations\201807251626224_initialmigration.cs" />
+    <Compile Include="Migrations\201807251626224_initialmigration.Designer.cs">
+      <DependentUpon>201807251626224_initialmigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -224,9 +222,11 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Media.cs" />
     <Compile Include="Models\MediaType.cs" />
+    <Compile Include="Models\Progress.cs" />
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\ClassTask.cs" />
     <Compile Include="Models\Zipcode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -322,6 +322,16 @@
     <Content Include="Views\Resources\Details.cshtml" />
     <Content Include="Views\Resources\Edit.cshtml" />
     <Content Include="Views\Resources\Index.cshtml" />
+    <Content Include="Views\ClassTasks\Create.cshtml" />
+    <Content Include="Views\ClassTasks\Delete.cshtml" />
+    <Content Include="Views\ClassTasks\Details.cshtml" />
+    <Content Include="Views\ClassTasks\Edit.cshtml" />
+    <Content Include="Views\ClassTasks\Index.cshtml" />
+    <Content Include="Views\Progresses\Create.cshtml" />
+    <Content Include="Views\Progresses\Delete.cshtml" />
+    <Content Include="Views\Progresses\Details.cshtml" />
+    <Content Include="Views\Progresses\Edit.cshtml" />
+    <Content Include="Views\Progresses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -340,11 +350,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807251256077_initialmigration.resx">
-      <DependentUpon>201807251256077_initialmigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807251351046_displaynamemig.resx">
-      <DependentUpon>201807251351046_displaynamemig.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807251626224_initialmigration.resx">
+      <DependentUpon>201807251626224_initialmigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -7,22 +7,16 @@ using System.Web;
 
 namespace PortalToKnowledge.Models
 {
-	public class Media
+	public class ClassTask
 	{
 		[Key]
-		public int MediaId { get; set; }
-		public string Link { get; set; }
+		public int ClassTaskId { get; set; }
+
+		[Display (Name = "Task Name")]
+		public string TaskName { get; set; }
 
 		[ForeignKey("Class")]
 		public int ClassId { get; set; }
 		public Class Class { get; set; }
-
-		[ForeignKey("MediaType")]
-		public int MediaTypeId { get; set; }
-		public MediaType MediaType { get; set; }
-
-		[ForeignKey("Progress")]
-		public int ProgressId { get; set; }
-		public Progress Progress { get; set; }
 	}
 }

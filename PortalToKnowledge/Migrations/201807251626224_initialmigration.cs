@@ -121,12 +121,15 @@ namespace PortalToKnowledge.Migrations
                         Link = c.String(),
                         ClassId = c.Int(nullable: false),
                         MediaTypeId = c.Int(nullable: false),
+                        ProgressId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.MediaId)
                 .ForeignKey("dbo.Classes", t => t.ClassId, cascadeDelete: true)
                 .ForeignKey("dbo.MediaTypes", t => t.MediaTypeId, cascadeDelete: true)
+                .ForeignKey("dbo.Progresses", t => t.ProgressId, cascadeDelete: true)
                 .Index(t => t.ClassId)
-                .Index(t => t.MediaTypeId);
+                .Index(t => t.MediaTypeId)
+                .Index(t => t.ProgressId);
             
             CreateTable(
                 "dbo.MediaTypes",
@@ -138,6 +141,15 @@ namespace PortalToKnowledge.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.Progresses",
+                c => new
+                    {
+                        ProgressId = c.Int(nullable: false, identity: true),
+                        TaskStatus = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.ProgressId);
+            
+            CreateTable(
                 "dbo.Students",
                 c => new
                     {
@@ -145,10 +157,25 @@ namespace PortalToKnowledge.Migrations
                         FirstName = c.String(),
                         LastName = c.String(),
                         ApplicationUserId = c.String(maxLength: 128),
+                        ProgressId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.StudentId)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserId)
-                .Index(t => t.ApplicationUserId);
+                .ForeignKey("dbo.Progresses", t => t.ProgressId, cascadeDelete: true)
+                .Index(t => t.ApplicationUserId)
+                .Index(t => t.ProgressId);
+            
+            CreateTable(
+                "dbo.ClassTasks",
+                c => new
+                    {
+                        ClassTaskId = c.Int(nullable: false, identity: true),
+                        TaskName = c.String(),
+                        ClassId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ClassTaskId)
+                .ForeignKey("dbo.Classes", t => t.ClassId, cascadeDelete: true)
+                .Index(t => t.ClassId);
             
             CreateTable(
                 "dbo.Resources",
@@ -218,9 +245,12 @@ namespace PortalToKnowledge.Migrations
             DropForeignKey("dbo.Resources", "ZipcodeId", "dbo.Zipcodes");
             DropForeignKey("dbo.Resources", "StateId", "dbo.States");
             DropForeignKey("dbo.Resources", "CityId", "dbo.Cities");
+            DropForeignKey("dbo.ClassTasks", "ClassId", "dbo.Classes");
+            DropForeignKey("dbo.Students", "ProgressId", "dbo.Progresses");
             DropForeignKey("dbo.StudentClasses", "Class_ClassId", "dbo.Classes");
             DropForeignKey("dbo.StudentClasses", "Student_StudentId", "dbo.Students");
             DropForeignKey("dbo.Students", "ApplicationUserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Media", "ProgressId", "dbo.Progresses");
             DropForeignKey("dbo.Media", "MediaTypeId", "dbo.MediaTypes");
             DropForeignKey("dbo.Media", "ClassId", "dbo.Classes");
             DropForeignKey("dbo.Classes", "InstructorId", "dbo.Instructors");
@@ -235,7 +265,10 @@ namespace PortalToKnowledge.Migrations
             DropIndex("dbo.Resources", new[] { "ZipcodeId" });
             DropIndex("dbo.Resources", new[] { "StateId" });
             DropIndex("dbo.Resources", new[] { "CityId" });
+            DropIndex("dbo.ClassTasks", new[] { "ClassId" });
+            DropIndex("dbo.Students", new[] { "ProgressId" });
             DropIndex("dbo.Students", new[] { "ApplicationUserId" });
+            DropIndex("dbo.Media", new[] { "ProgressId" });
             DropIndex("dbo.Media", new[] { "MediaTypeId" });
             DropIndex("dbo.Media", new[] { "ClassId" });
             DropIndex("dbo.Instructors", new[] { "ApplicationUserId" });
@@ -251,7 +284,9 @@ namespace PortalToKnowledge.Migrations
             DropTable("dbo.Zipcodes");
             DropTable("dbo.States");
             DropTable("dbo.Resources");
+            DropTable("dbo.ClassTasks");
             DropTable("dbo.Students");
+            DropTable("dbo.Progresses");
             DropTable("dbo.MediaTypes");
             DropTable("dbo.Media");
             DropTable("dbo.Instructors");

@@ -42,5 +42,7 @@ namespace PortalToKnowledge.Models
 		public DbSet<City> City { get; set; }
 		public DbSet<State> State { get; set; }
 		public DbSet<Zipcode> Zipcode { get; set; }
+		public DbSet<ClassTask> ClassTask { get; set; }
+		public DbSet<Progress> Progress { get; set; }
 	}
 }
