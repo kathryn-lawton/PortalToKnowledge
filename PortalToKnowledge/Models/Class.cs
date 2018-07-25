@@ -12,6 +12,7 @@ namespace PortalToKnowledge.Models
 		public Class()
 		{
 			this.Instructors = new HashSet<Instructor>();
+			this.Medias = new HashSet<Media>();
 		}
 
 		[Key]
@@ -19,7 +20,6 @@ namespace PortalToKnowledge.Models
 		public string Name { get; set; }
 
 		public virtual ICollection<Instructor> Instructors { get; set; }
-
 		public virtual ICollection<Media> Medias { get; set; }
 	}
 }

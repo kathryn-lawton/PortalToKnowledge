@@ -37,5 +37,6 @@ namespace PortalToKnowledge.Models
 		public DbSet<Admin> Admin { get; set; }
 		public DbSet<Class> Class { get; set; }
 		public DbSet<Media> Media { get; set; }
+		public DbSet<MediaType> MediaType { get; set; }
 	}
 }

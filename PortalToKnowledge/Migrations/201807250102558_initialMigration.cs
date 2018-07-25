@@ -3,7 +3,7 @@ namespace PortalToKnowledge.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initialmigration : DbMigration
+    public partial class initialMigration : DbMigration
     {
         public override void Up()
         {
@@ -122,13 +122,24 @@ namespace PortalToKnowledge.Migrations
                 c => new
                     {
                         MediaId = c.Int(nullable: false, identity: true),
-                        Type = c.String(),
                         Link = c.String(),
                         ClassId = c.Int(nullable: false),
+                        MediaTypeId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.MediaId)
                 .ForeignKey("dbo.Classes", t => t.ClassId, cascadeDelete: true)
-                .Index(t => t.ClassId);
+                .ForeignKey("dbo.MediaTypes", t => t.MediaTypeId, cascadeDelete: true)
+                .Index(t => t.ClassId)
+                .Index(t => t.MediaTypeId);
+            
+            CreateTable(
+                "dbo.MediaTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Type = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -158,6 +169,7 @@ namespace PortalToKnowledge.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Media", "MediaTypeId", "dbo.MediaTypes");
             DropForeignKey("dbo.Media", "ClassId", "dbo.Classes");
             DropForeignKey("dbo.Students", "InstructorId", "dbo.Instructors");
             DropForeignKey("dbo.Students", "ApplicationUserId", "dbo.AspNetUsers");
@@ -171,6 +183,7 @@ namespace PortalToKnowledge.Migrations
             DropIndex("dbo.InstructorClasses", new[] { "Class_ClassId" });
             DropIndex("dbo.InstructorClasses", new[] { "Instructor_InstructorId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Media", new[] { "MediaTypeId" });
             DropIndex("dbo.Media", new[] { "ClassId" });
             DropIndex("dbo.Students", new[] { "ApplicationUserId" });
             DropIndex("dbo.Students", new[] { "InstructorId" });
@@ -183,6 +196,7 @@ namespace PortalToKnowledge.Migrations
             DropIndex("dbo.Admins", new[] { "ApplicationUserId" });
             DropTable("dbo.InstructorClasses");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.MediaTypes");
             DropTable("dbo.Media");
             DropTable("dbo.Students");
             DropTable("dbo.Instructors");

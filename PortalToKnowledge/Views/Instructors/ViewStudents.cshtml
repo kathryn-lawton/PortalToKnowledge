@@ -1,0 +1,47 @@
+﻿@model IEnumerable<PortalToKnowledge.Models.Student>
+
+@{
+    ViewBag.Title = "ViewStudents";
+}
+
+<h2>ViewStudents</h2>
+
+<p>
+    @Html.ActionLink("Add Student", "AddStudent")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.ActionLink("Check Progress", "StudentProgress", new { id = item.StudentId }) |
+            @Html.ActionLink("Remove", "RemoveStudent", new { id = item.StudentId })
+        </td>
+    </tr>
+    }
+
+</table>
+
+

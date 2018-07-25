@@ -68,28 +68,52 @@ namespace PortalToKnowledge.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult CreateMedia()
+		public ActionResult AddMedia(int? id)
 		{
-			return View();
+			if(id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var model = new Media() { ClassId = id.Value };
+			ViewBag.MediaTypeId = new SelectList(db.MediaType, "Id", "Type");
+			return View(model);
 		}
 
-		//[HttpPost]
-		//[ValidateAntiForgeryToken]
-		//public ActionResult CreateMedia(Media model)
-		//{
-		//	var currentUserId = User.Identity.GetUserId();
-		//	var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult AddMedia(Media model)
+		{
+			var currentUserId = User.Identity.GetUserId();
+			var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
 
-		//	if (foundInstructor == null)
-		//	{
-		//		return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-		//	}
+			if (foundInstructor == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
 
-		//	foundInstructor.Classes.ToList();
-		//	//get class instructor wants to add link to
-		//	//instructor selects type from drop dowm
-		//	//instructor adds
+			db.Media.Add(model);
+			db.SaveChanges();
+
+			return RedirectToAction("ViewClasses"); // View Class Media
 		}
 
+		[HttpGet]
+		public ActionResult ViewClasses()
+		{
+			var currentUserId = User.Identity.GetUserId();
+			var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
+
+			return View(foundInstructor.Classes.ToList());
+		}
+
+		[HttpGet]
+		public ActionResult ViewStudents()
+		{
+			var currentUserId = User.Identity.GetUserId();
+			var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
+
+			return View(foundInstructor.Students.ToList());
+		}
 	}
 }

@@ -11,11 +11,14 @@ namespace PortalToKnowledge.Models
 	{
 		[Key]
 		public int MediaId { get; set; }
-		public string Type { get; set; }
 		public string Link { get; set; }
 
 		[ForeignKey("Class")]
 		public int ClassId { get; set; }
 		public Class Class { get; set; }
+
+		[ForeignKey("MediaType")]
+		public int MediaTypeId { get; set; }
+		public MediaType MediaType { get; set; }
 	}
 }
