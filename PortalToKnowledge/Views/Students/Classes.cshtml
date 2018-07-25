@@ -1,7 +1,32 @@
-﻿
+﻿@model IEnumerable<PortalToKnowledge.Models.Class>
+
 @{
-    ViewBag.Title = "Classes";
+    ViewBag.Title = "Index";
 }
 
-<h2>Classes</h2>
+<h2>Index</h2>
 
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ClassId }) |
+                @Html.ActionLink("Flashcards", "Flashcards", new { id = item.ClassId }) |
+                @Html.ActionLink("Notes", "Notes", new { id = item.ClassId }) |
+                @Html.ActionLink("Additional Resources", "Index", "Resources", new { id = item.ClassId }, null) |
+            </td>
+        </tr>
+    }
+
+</table>

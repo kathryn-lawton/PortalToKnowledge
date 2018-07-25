@@ -1,4 +1,4 @@
-﻿@model PortalToKnowledge.Models.Student
+﻿@model PortalToKnowledge.Models.Instructor
 
 @{
     ViewBag.Title = "Profile";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Student</h4>
+    <h4>Instructors</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -28,19 +28,19 @@
     </dl>
 </div>
 
+@Html.DisplayNameFor(model => model.Classes)
 @foreach (var item in Model.Classes)
 {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
+            <br>
         </td>
-        <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
-        </div>
     </tr>
 }
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.StudentId }) |
-    @Html.ActionLink("Home", "Details")
+    <br>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.InstructorId }) |
+    @Html.ActionLink("Home", "Index")
 </p>

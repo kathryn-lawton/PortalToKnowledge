@@ -8,15 +8,16 @@ using System.Web.Mvc;
 
 namespace PortalToKnowledge.Controllers
 {
-	public class AdminsController : Controller
-	{
+    public class AdminsController : Controller
+    {
 		ApplicationDbContext db = new ApplicationDbContext();
-		// GET: Admin
+
+		// GET: Admins
 		public ActionResult Index()
-		{
+        {
 			var admins = db.Admin.ToList();
 			return View(admins);
-		}
+        }
 
 		// GET: Admins/Create
 		[HttpGet]
@@ -27,7 +28,7 @@ namespace PortalToKnowledge.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create([Bind(Include = "AdminId, FirstName, LastName")] Admin admin)
+		public ActionResult Create([Bind(Include = "AdminId, FirstName, LastName, ApplicationUserId")] Admin admin)
 		{
 			if (ModelState.IsValid)
 			{
@@ -39,6 +40,5 @@ namespace PortalToKnowledge.Controllers
 
 			return View(admin);
 		}
-
 	}
 }

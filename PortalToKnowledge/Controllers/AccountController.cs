@@ -207,6 +207,7 @@ namespace PortalToKnowledge.Controllers
 					}
 					AddErrors(result);
 				}
+
 				else if (model.Role == "Admin")
 				{
 					userManager.AddToRole(user.Id, "Admin");

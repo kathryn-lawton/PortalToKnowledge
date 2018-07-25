@@ -63,7 +63,7 @@ namespace PortalToKnowledge.Controllers
 			db.Class.Add(model);
 			db.SaveChanges();
 
-			return RedirectToAction("Index");
+			return RedirectToAction( "ViewClasses");
 		}
 
 		[HttpGet]
@@ -158,5 +158,32 @@ namespace PortalToKnowledge.Controllers
 
 			return RedirectToAction("ViewStudents");
 		}
+
+		[HttpGet]
+		public ActionResult Details(int? id)
+		{
+			Instructor instructor;
+			if (id == null)
+			{
+				var currentUserId = User.Identity.GetUserId();
+				if (currentUserId == null)
+				{
+					return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				}
+				instructor = db.Instrutor.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
+			}
+			else
+			{
+				instructor = db.Instrutor.Where(s => s.InstructorId == id).FirstOrDefault();
+			}
+
+			if (instructor == null)
+			{
+				return HttpNotFound();
+			}
+			return View(instructor);
+		}
 	}
+
+
 }

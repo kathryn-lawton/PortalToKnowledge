@@ -29,7 +29,7 @@ namespace PortalToKnowledge.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create([Bind(Include = "StudentId, FirstName, LastName, ApplicationUserId")] Student student)
+		public ActionResult Create([Bind(Include = "StudentId, FirstName, LastName, ApplicationUserId, ProgressId")] Student student)
 		{
 			if (ModelState.IsValid)
 			{
@@ -94,9 +94,17 @@ namespace PortalToKnowledge.Controllers
 			return View(student);
 		}
 
+		[HttpGet]
 		public ActionResult Classes()
 		{
-			return View();
+			var currentUserId = User.Identity.GetUserId();
+			if (currentUserId == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+			 var foundStudent = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
+			var foundClasses = foundStudent.Classes.ToList();
+			return View(foundClasses);
 		}
 
 		public ActionResult Flashcards()

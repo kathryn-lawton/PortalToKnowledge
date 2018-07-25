@@ -27,6 +27,7 @@
                 @Html.ActionLink("View Class", "Details", "Classes", new { id = item.ClassId }, null) |
                 @Html.ActionLink("Add Student", "AddStudent", "Classes", new { id = item.ClassId }, null) |
                 @Html.ActionLink("Add Media", "AddMedia", new { id = item.ClassId }) |
+                @Html.ActionLink("Add Task", "Create", "ClassTasks", new { id = item.ClassId }, null) |
                 @Html.ActionLink("Add Resource", "Create", "Resources", new { id = item.ClassId }, null) |
                 @Html.ActionLink("Delete", "Delete", "Classes", new { id = item.ClassId }, null)
             </td>
