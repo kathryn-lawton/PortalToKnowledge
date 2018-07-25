@@ -10,6 +10,7 @@ namespace PortalToKnowledge.Models
 	{
 		[Key]
 		public int CityId { get; set; }
+		[Display(Name = "City")]
 		public string Name { get; set; }
 	}
 }

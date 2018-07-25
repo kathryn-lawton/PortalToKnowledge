@@ -200,13 +200,19 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ResourcesController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Keys.cs" />
     <Compile Include="Migrations\201807251256077_initialmigration.cs" />
     <Compile Include="Migrations\201807251256077_initialmigration.Designer.cs">
       <DependentUpon>201807251256077_initialmigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807251351046_displaynamemig.cs" />
+    <Compile Include="Migrations\201807251351046_displaynamemig.Designer.cs">
+      <DependentUpon>201807251351046_displaynamemig.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -311,6 +317,11 @@
     <Content Include="Views\Instructors\AddMedia.cshtml" />
     <Content Include="Views\Instructors\ViewStudents.cshtml" />
     <Content Include="Views\Classes\AddStudent.cshtml" />
+    <Content Include="Views\Resources\Create.cshtml" />
+    <Content Include="Views\Resources\Delete.cshtml" />
+    <Content Include="Views\Resources\Details.cshtml" />
+    <Content Include="Views\Resources\Edit.cshtml" />
+    <Content Include="Views\Resources\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -331,6 +342,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201807251256077_initialmigration.resx">
       <DependentUpon>201807251256077_initialmigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807251351046_displaynamemig.resx">
+      <DependentUpon>201807251351046_displaynamemig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

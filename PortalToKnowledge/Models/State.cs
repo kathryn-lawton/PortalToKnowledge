@@ -10,6 +10,7 @@ namespace PortalToKnowledge.Models
 	{
 		[Key]
 		public int StateId { get; set; }
+		[Display (Name = "State")]
 		public string Abbreviation { get; set; }
 	}
 }
