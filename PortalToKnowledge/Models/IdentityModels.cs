@@ -38,5 +38,9 @@ namespace PortalToKnowledge.Models
 		public DbSet<Class> Class { get; set; }
 		public DbSet<Media> Media { get; set; }
 		public DbSet<MediaType> MediaType { get; set; }
+		public DbSet<Resource> Resource { get; set; }
+		public DbSet<City> City { get; set; }
+		public DbSet<State> State { get; set; }
+		public DbSet<Zipcode> Zipcode { get; set; }
 	}
 }

@@ -3,7 +3,7 @@ namespace PortalToKnowledge.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initialMigration : DbMigration
+    public partial class initialmigration : DbMigration
     {
         public override void Up()
         {
@@ -80,6 +80,15 @@ namespace PortalToKnowledge.Migrations
                 .Index(t => t.RoleId);
             
             CreateTable(
+                "dbo.Cities",
+                c => new
+                    {
+                        CityId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.CityId);
+            
+            CreateTable(
                 "dbo.Classes",
                 c => new
                     {
@@ -142,6 +151,43 @@ namespace PortalToKnowledge.Migrations
                 .Index(t => t.ApplicationUserId);
             
             CreateTable(
+                "dbo.Resources",
+                c => new
+                    {
+                        ResourceId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        StreetAddress = c.String(),
+                        CityId = c.Int(nullable: false),
+                        StateId = c.Int(nullable: false),
+                        ZipcodeId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ResourceId)
+                .ForeignKey("dbo.Cities", t => t.CityId, cascadeDelete: true)
+                .ForeignKey("dbo.States", t => t.StateId, cascadeDelete: true)
+                .ForeignKey("dbo.Zipcodes", t => t.ZipcodeId, cascadeDelete: true)
+                .Index(t => t.CityId)
+                .Index(t => t.StateId)
+                .Index(t => t.ZipcodeId);
+            
+            CreateTable(
+                "dbo.States",
+                c => new
+                    {
+                        StateId = c.Int(nullable: false, identity: true),
+                        Abbreviation = c.String(),
+                    })
+                .PrimaryKey(t => t.StateId);
+            
+            CreateTable(
+                "dbo.Zipcodes",
+                c => new
+                    {
+                        ZipcodeId = c.Int(nullable: false, identity: true),
+                        Zip = c.String(),
+                    })
+                .PrimaryKey(t => t.ZipcodeId);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -169,6 +215,9 @@ namespace PortalToKnowledge.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Resources", "ZipcodeId", "dbo.Zipcodes");
+            DropForeignKey("dbo.Resources", "StateId", "dbo.States");
+            DropForeignKey("dbo.Resources", "CityId", "dbo.Cities");
             DropForeignKey("dbo.StudentClasses", "Class_ClassId", "dbo.Classes");
             DropForeignKey("dbo.StudentClasses", "Student_StudentId", "dbo.Students");
             DropForeignKey("dbo.Students", "ApplicationUserId", "dbo.AspNetUsers");
@@ -183,6 +232,9 @@ namespace PortalToKnowledge.Migrations
             DropIndex("dbo.StudentClasses", new[] { "Class_ClassId" });
             DropIndex("dbo.StudentClasses", new[] { "Student_StudentId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Resources", new[] { "ZipcodeId" });
+            DropIndex("dbo.Resources", new[] { "StateId" });
+            DropIndex("dbo.Resources", new[] { "CityId" });
             DropIndex("dbo.Students", new[] { "ApplicationUserId" });
             DropIndex("dbo.Media", new[] { "MediaTypeId" });
             DropIndex("dbo.Media", new[] { "ClassId" });
@@ -196,11 +248,15 @@ namespace PortalToKnowledge.Migrations
             DropIndex("dbo.Admins", new[] { "ApplicationUserId" });
             DropTable("dbo.StudentClasses");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Zipcodes");
+            DropTable("dbo.States");
+            DropTable("dbo.Resources");
             DropTable("dbo.Students");
             DropTable("dbo.MediaTypes");
             DropTable("dbo.Media");
             DropTable("dbo.Instructors");
             DropTable("dbo.Classes");
+            DropTable("dbo.Cities");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");

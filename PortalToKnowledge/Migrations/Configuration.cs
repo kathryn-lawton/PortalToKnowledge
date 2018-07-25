@@ -18,10 +18,11 @@ namespace PortalToKnowledge.Migrations
         {
 			context.Roles.AddOrUpdate(
 				r => r.Name,
-					new IdentityRole { Name = "Student" },
-					new IdentityRole { Name = "Instructor" },
-					new IdentityRole { Name = "Admin" }
-					);
+				new IdentityRole { Name = "Student" },
+				new IdentityRole { Name = "Instructor" },
+				new IdentityRole { Name = "Admin" }
+				);
+			
 
 			context.MediaType.AddOrUpdate(
 				t => t.Type,
@@ -29,7 +30,21 @@ namespace PortalToKnowledge.Migrations
 					new MediaType { Type = "Document" }
 					);
 
+			context.City.AddOrUpdate(
+				c => c.Name,
+					new City { Name = "Milwaukee" }
+							);
 
+			context.State.AddOrUpdate(
+				s => s.Abbreviation,
+				new State { Abbreviation = "WI" }
+				);
+
+			context.Zipcode.AddOrUpdate(
+				z => z.Zip,
+				new Zipcode { Zip = "53202" },
+				new Zipcode { Zip = "53203" }
+				); 
 		}
-	}
+    }
 }

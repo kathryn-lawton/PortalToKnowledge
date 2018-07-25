@@ -7,13 +7,13 @@ namespace PortalToKnowledge.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class initialMigration : IMigrationMetadata
+    public sealed partial class initialmigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(initialMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initialmigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201807250209213_initialMigration"; }
+            get { return "201807251256077_initialmigration"; }
         }
         
         string IMigrationMetadata.Source
