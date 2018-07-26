@@ -107,14 +107,16 @@ namespace PortalToKnowledge.Controllers
 			return View(foundClasses);
 		}
 
+		public ActionResult Notes()
+		{
+			return View();
+		}
+
 		public ActionResult Flashcards()
 		{
 			return View();
 		}
 
-		public ActionResult Notes()
-		{
-			return View();
-		}
+
 	}
 }
