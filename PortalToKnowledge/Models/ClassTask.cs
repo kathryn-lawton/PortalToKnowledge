@@ -14,6 +14,11 @@ namespace PortalToKnowledge.Models
 
 		[Display (Name = "Task Name")]
 		public string TaskName { get; set; }
+		public string Link { get; set; }
+
+		[ForeignKey("MediaType")]
+		public int MediaTypeId { get; set; }
+		public MediaType MediaType { get; set; }
 
 		[ForeignKey("Class")]
 		public int ClassId { get; set; }

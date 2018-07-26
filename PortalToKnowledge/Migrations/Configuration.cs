@@ -17,11 +17,11 @@ namespace PortalToKnowledge.Migrations
         protected override void Seed(PortalToKnowledge.Models.ApplicationDbContext context)
         {
 			context.Roles.AddOrUpdate(
-					 r => r.Name,
-					 new IdentityRole { Name = "Student" },
-					 new IdentityRole { Name = "Instructor" },
-					 new IdentityRole { Name = "Admin" }
-					 );
+				  r => r.Name,
+				  new IdentityRole { Name = "Student" },
+				  new IdentityRole { Name = "Instructor" },
+				  new IdentityRole { Name = "Admin" }
+				  );
 
 			context.MediaType.AddOrUpdate(
 				t => t.Type,
@@ -44,6 +44,7 @@ namespace PortalToKnowledge.Migrations
 				new Models.Zipcode { Zip = "53202" },
 				new Models.Zipcode { Zip = "53203" }
 				);
+
 		}
-    }
+	}
 }

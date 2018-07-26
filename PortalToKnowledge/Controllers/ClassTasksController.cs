@@ -37,10 +37,21 @@ namespace PortalToKnowledge.Controllers
         }
 
         // GET: ClassTasks/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.ClassId = new SelectList(db.Class, "ClassId", "Name");
-            return View();
+			if(id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var classTask = new ClassTask()
+			{
+				ClassId = id.Value
+			};
+
+			ViewBag.MediaTypeId = new SelectList(db.MediaType, "Id", "Type", classTask.MediaTypeId);
+
+			return View(classTask);
         }
 
         // POST: ClassTasks/Create
@@ -48,7 +59,7 @@ namespace PortalToKnowledge.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ClassTaskId,TaskName,ClassId")] ClassTask classTask)
+        public ActionResult Create([Bind(Include = "ClassTaskId,TaskName, Link, ClassId,MediaTypeId")] ClassTask classTask)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +68,6 @@ namespace PortalToKnowledge.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClassId = new SelectList(db.Class, "ClassId", "Name", classTask.ClassId);
             return View(classTask);
         }
 
