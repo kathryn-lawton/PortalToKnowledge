@@ -17,7 +17,7 @@ namespace PortalToKnowledge.Controllers
         // GET: Resources
         public ActionResult Index()
         {
-            var resource = db.Resource.Include(r => r.City).Include(r => r.State).Include(r => r.Zipcode);
+			var resource = db.Resource.Include(r => r.City).Include(r => r.State).Include(r => r.Zipcode);
             return View(resource.ToList());
         }
 

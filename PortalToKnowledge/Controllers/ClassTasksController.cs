@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using PortalToKnowledge.Models;
 
 namespace PortalToKnowledge.Controllers
@@ -17,18 +19,33 @@ namespace PortalToKnowledge.Controllers
         // GET: ClassTasks
         public ActionResult Index()
         {
-            var classTask = db.ClassTask.Include(c => c.Class);
-            return View(classTask.ToList());
+			if (User.IsInRole("Student"))
+			{
+				var currentUserId = User.Identity.GetUserId();
+				var foundUser = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
+				var foundClasses = foundUser.Classes.ToList();
+				return View(foundClasses);
+			}
+			else if (User.IsInRole("Instructor"))
+			{
+				var currentUserId = User.Identity.GetUserId();
+				var foundUser = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
+				var foundClasses = foundUser.Classes.ToList();
+
+				return View(foundClasses);
+			}
+
+			return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        // GET: ClassTasks/Details/5
-        public ActionResult Details(int? id)
+		// GET: ClassTasks/Details/5
+		public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ClassTask classTask = db.ClassTask.Find(id);
+            ClassTask classTask = db.ClassTask.Where(c => c.ClassId == id).Include(c => c.Class).FirstOrDefault();
             if (classTask == null)
             {
                 return HttpNotFound();

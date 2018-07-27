@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PortalToKnowledge.Models.ClassTask>
+﻿@model IEnumerable<PortalToKnowledge.Models.Class>
 
 @{
     ViewBag.Title = "Index";
@@ -12,10 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Class.Name)
+            @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TaskName)
+            @Html.DisplayNameFor(model => model.ClassTasks)
         </th>
         <th></th>
     </tr>
@@ -23,15 +23,15 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Class.Name)
+            @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TaskName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ClassTaskId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ClassTaskId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ClassTaskId })
+            <ul>
+            @foreach(var classTask in item.ClassTasks)
+            {
+                <li>@classTask.TaskName |@Html.ActionLink("Details", "Details", new { id = classTask.ClassTaskId }) </li>
+            }
+            </ul>
         </td>
     </tr>
 }

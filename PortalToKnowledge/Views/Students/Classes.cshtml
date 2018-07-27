@@ -25,6 +25,7 @@
                 @Html.ActionLink("Flashcards", "Flashcards", new { id = item.ClassId }) |
                 @Html.ActionLink("Notes", "Notes", new { id = item.ClassId }) |
                 @Html.ActionLink("Additional Resources", "Index", "Resources", new { id = item.ClassId }, null) |
+                @Html.ActionLink("Tasks", "Index", "ClassTasks", new { id = item.ClassId }, null) 
             </td>
         </tr>
     }

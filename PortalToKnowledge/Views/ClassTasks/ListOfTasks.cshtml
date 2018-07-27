@@ -1,0 +1,51 @@
+﻿@model ICollection<System.Object>
+
+@{
+    ViewBag.Title = "ListOfTasks";
+}
+
+<h2>ListOfTasks</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Class.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MediaType.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TaskName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Link)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Class.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MediaType.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TaskName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Link)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ClassTaskId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ClassTaskId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ClassTaskId })
+        </td>
+    </tr>
+}
+
+</table>
