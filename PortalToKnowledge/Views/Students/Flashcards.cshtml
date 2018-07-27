@@ -1,7 +1,16 @@
-﻿
-@{
-    ViewBag.Title = "Flashcards";
-}
+﻿@model PortalToKnowledge.ViewModels.QuizletResponse
 
 <h2>Flashcards</h2>
 
+<div>
+    @foreach (var item in Model.terms)
+    {
+        <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h4 class="card-title"> @Html.DisplayFor(modelItem => item.term)</h4>
+                <p class="card-text">@Html.DisplayFor(modelItem => item.definition)</p>
+            </div>
+        </div>
+    }
+</div>

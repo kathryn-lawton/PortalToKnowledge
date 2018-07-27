@@ -117,13 +117,13 @@ namespace PortalToKnowledge.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Flashcards(string id)
+		public ActionResult Flashcards()
 		{
-			if(id == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
-
+			//if(id == null)
+			//{
+			//	return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			//}
+			QuizletResponse quizletResponse;
 			using (var client = new HttpClient())
 			{
 				client.BaseAddress = new Uri("https://api.quizlet.com/");
@@ -131,6 +131,7 @@ namespace PortalToKnowledge.Controllers
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 				string api = $"2.0/sets/205753987?client_id=ZdN3F9y6eV&whitespace=1";
 				var response = client.GetAsync(api).Result;
+				//pass in string id
 				//figure out id, add field to class model
 
 				string responseString;
@@ -138,7 +139,7 @@ namespace PortalToKnowledge.Controllers
 				{
 					responseString = response.Content.ReadAsStringAsync().Result;
 					JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
-					var quizletResponse = javaScriptSerializer.Deserialize<QuizletResponse>(responseString);
+					quizletResponse = javaScriptSerializer.Deserialize<QuizletResponse>(responseString);
 
 					//var values = javaScriptSerializer.DeserializeObject<QuizletResponse>(responseString);
 					//string test = values;
@@ -150,7 +151,7 @@ namespace PortalToKnowledge.Controllers
 				}
 			}
 
-			return View();
+			return View(quizletResponse);
 		}
 
 

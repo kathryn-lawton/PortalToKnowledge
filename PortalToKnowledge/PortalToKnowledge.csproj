@@ -344,7 +344,6 @@
     <Content Include="Views\Instructors\Edit.cshtml" />
     <Content Include="Views\Instructors\Delete.cshtml" />
     <Content Include="Views\Students\CurrentTasks.cshtml" />
-    <Content Include="Views\ClassTasks\ListOfTasks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
