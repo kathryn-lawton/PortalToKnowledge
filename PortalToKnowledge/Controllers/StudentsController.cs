@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNet.Identity;
 using PortalToKnowledge.Models;
+using PortalToKnowledge.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace PortalToKnowledge.Controllers
 {
@@ -112,10 +116,43 @@ namespace PortalToKnowledge.Controllers
 			return View();
 		}
 
-		public ActionResult Flashcards()
+		[HttpGet]
+		public ActionResult Flashcards(string id)
 		{
+			if(id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri("https://api.quizlet.com/");
+				client.DefaultRequestHeaders.Accept.Clear();
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				string api = $"2.0/sets/205753987?client_id=ZdN3F9y6eV&whitespace=1";
+				var response = client.GetAsync(api).Result;
+				//figure out id, add field to class model
+
+				string responseString;
+				if (response.IsSuccessStatusCode)
+				{
+					responseString = response.Content.ReadAsStringAsync().Result;
+					JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
+					var quizletResponse = javaScriptSerializer.Deserialize<QuizletResponse>(responseString);
+
+					//var values = javaScriptSerializer.DeserializeObject<QuizletResponse>(responseString);
+					//string test = values;
+					Console.WriteLine(quizletResponse.id);
+				}
+				else
+				{
+					return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				}
+			}
+
 			return View();
 		}
+
 
 	}
 }
