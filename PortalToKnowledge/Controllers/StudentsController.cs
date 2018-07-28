@@ -67,7 +67,35 @@ namespace PortalToKnowledge.Controllers
 			{
 				return HttpNotFound();
 			}
-			return View(student);
+
+			Dictionary<int, int> percentageMap = new Dictionary<int, int>();
+			foreach(var course in student.Courses)
+			{
+				int numberOfAssignments = 0;
+				int completedAssignments = 0;
+
+				foreach (var assignment in course.Assignments)
+				{
+					var progress = db.Progress.Where(p => p.StudentId == student.StudentId && p.AssignmentId == assignment.AssignmentId).FirstOrDefault();
+					numberOfAssignments++;
+					if(progress.Status)
+					{
+						completedAssignments++;
+					}
+				}
+
+				int wholePercentage = (completedAssignments * 100) / numberOfAssignments;
+				percentageMap.Add(course.CourseId, wholePercentage);
+			}
+
+			var model = new StudentViewModel()
+			{
+				Student = student,
+				progressPercentageMap = percentageMap
+			};
+
+
+			return View(model);
 		}
 
 		[HttpGet]
