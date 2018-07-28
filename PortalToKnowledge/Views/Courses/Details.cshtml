@@ -1,4 +1,4 @@
-﻿@model PortalToKnowledge.Models.Class
+﻿@model PortalToKnowledge.Models.Course
 
 @{
     ViewBag.Title = "Details";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Class</h4>
+    <h4>Courses</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -47,7 +47,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ClassId }) |
-    @Html.ActionLink("Add Students", "AddStudent", new { id = Model.ClassId }) |
-    @Html.ActionLink("Back to Classes", "ViewClasses", "Instructors")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
+    @Html.ActionLink("Add Students", "AddStudent", new { id = Model.CourseId }) |
+    @Html.ActionLink("Back to Courses", "ViewCourses", "Instructors")
 </p>

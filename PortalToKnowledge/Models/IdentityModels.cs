@@ -35,7 +35,7 @@ namespace PortalToKnowledge.Models
 		public DbSet<Student> Student { get; set; }
 		public DbSet<Instructor> Instrutor { get; set; }
 		public DbSet<Admin> Admin { get; set; }
-		public DbSet<Class> Class { get; set; }
+		public DbSet<Course> Course { get; set; }
 		public DbSet<MediaType> MediaType { get; set; }
 		public DbSet<Resource> Resource { get; set; }
 		public DbSet<City> City { get; set; }

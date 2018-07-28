@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PortalToKnowledge.Models.Student>
+﻿@model IEnumerable<PortalToKnowledge.Models.Course>
 
 @{
     ViewBag.Title = "ViewStudents";
@@ -12,32 +12,31 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.StudentId)
+            @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.Students)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.StudentId)
+            @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.ActionLink("Check Progress", "StudentProgress", new { id = item.StudentId }) |
-            @Html.ActionLink("Remove", "RemoveStudent", new { id = item.StudentId })
+            <ul>
+            @foreach(var student in item.Students)
+            {
+                <li>
+                    @student.FirstName 
+                    @student.LastName |
+                    @Html.ActionLink("Check Progress", "StudentProgress", new { studentId = student.StudentId, courseId = item.CourseId }) |
+                    @Html.ActionLink("Remove", "RemoveStudent", "Courses", new { id = student.StudentId }, null)
+                </li>
+            }
+            </ul>
         </td>
     </tr>
     }

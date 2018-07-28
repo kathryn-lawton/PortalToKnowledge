@@ -15,7 +15,7 @@
     <h4>Class</h4>
     <hr />
 
-    @Html.HiddenFor(model => model.ClassId)
+    @Html.HiddenFor(model => model.CourseId)
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     <div class="form-group">
@@ -35,7 +35,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to Class", "Details", new { id = Model.ClassId })
+    @Html.ActionLink("Back to Course", "Details", new { id = Model.CourseId })
 </div>
 
 

@@ -18,7 +18,7 @@
             @Html.DisplayNameFor(model => model.LastName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Classes)
+            @Html.DisplayNameFor(model => model.Courses)
         </th>
         <th></th>
     </tr>
@@ -33,7 +33,7 @@
         </td>
         <td>
             <ul>
-            @foreach(var course in item.Classes)
+            @foreach(var course in item.Courses)
             {
                 <li>@course.Name</li>
             }

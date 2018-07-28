@@ -11,7 +11,7 @@ namespace PortalToKnowledge.Models
 	{
 		public Instructor()
 		{
-			this.Classes = new HashSet<Class>();
+			this.Courses = new HashSet<Course>();
 		}
 
 		[Key]
@@ -27,6 +27,6 @@ namespace PortalToKnowledge.Models
 		public string ApplicationUserId { get; set; }
 		public ApplicationUser ApplicationUser { get; set; }
 
-		public virtual ICollection<Class> Classes { get; set; }
+		public virtual ICollection<Course> Courses { get; set; }
 	}
 }

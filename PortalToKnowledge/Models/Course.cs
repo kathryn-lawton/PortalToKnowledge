@@ -7,16 +7,16 @@ using System.Web;
 
 namespace PortalToKnowledge.Models
 {
-	public class Class
+	public class Course
 	{
-		public Class()
+		public Course()
 		{
 			this.Students = new HashSet<Student>();
 			this.ClassTasks = new HashSet<ClassTask>();
 		}
 
 		[Key]
-		public int ClassId { get; set; }
+		public int CourseId { get; set; }
 		public string Name { get; set; }
 
 		[ForeignKey("Instructor")]

@@ -44,13 +44,13 @@ namespace PortalToKnowledge.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult CreateClass()
+		public ActionResult CreateCourse()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		public ActionResult CreateClass(Class model)
+		public ActionResult CreateCourse(Course model)
 		{
 			var currentUserId = User.Identity.GetUserId();
 			var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
@@ -61,19 +61,19 @@ namespace PortalToKnowledge.Controllers
 			}
 
 			model.InstructorId = foundInstructor.InstructorId;
-			db.Class.Add(model);
+			db.Course.Add(model);
 			db.SaveChanges();
 
-			return RedirectToAction( "ViewClasses");
+			return RedirectToAction("ViewCourses");
 		}
 
 		[HttpGet]
-		public ActionResult ViewClasses()
+		public ActionResult ViewCourses()
 		{
 			var currentUserId = User.Identity.GetUserId();
 			var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
 
-			return View(foundInstructor.Classes.ToList());
+			return View(foundInstructor.Courses.ToList());
 		}
 
 		[HttpGet]
@@ -81,9 +81,8 @@ namespace PortalToKnowledge.Controllers
 		{
 			var currentUserId = User.Identity.GetUserId();
 			var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
-			var foundStudents = foundInstructor.Classes.ToList();
 
-			return View(foundStudents);
+			return View(foundInstructor.Courses.ToList());
 		}
 
 		[HttpGet]
@@ -124,7 +123,6 @@ namespace PortalToKnowledge.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 
-			// foundInstructor.Students.Add(model);
 			db.SaveChanges();
 
 			return RedirectToAction("ViewStudents");

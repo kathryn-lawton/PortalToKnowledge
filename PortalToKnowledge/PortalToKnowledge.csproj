@@ -18,7 +18,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44319</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -206,7 +206,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminsController.cs" />
-    <Compile Include="Controllers\ClassesController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\ClassTasksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorsController.cs" />
@@ -218,15 +218,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Keys.cs" />
-    <Compile Include="Migrations\201807260321583_initialmig.cs" />
-    <Compile Include="Migrations\201807260321583_initialmig.Designer.cs">
-      <DependentUpon>201807260321583_initialmig.cs</DependentUpon>
+    <Compile Include="Migrations\201807281934535_firstMigration.cs" />
+    <Compile Include="Migrations\201807281934535_firstMigration.Designer.cs">
+      <DependentUpon>201807281934535_firstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\City.cs" />
-    <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\Course.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Instructor.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -314,15 +314,15 @@
     <Content Include="Views\Students\Classes.cshtml" />
     <Content Include="Views\Students\Flashcards.cshtml" />
     <Content Include="Views\Students\Notes.cshtml" />
-    <Content Include="Views\Instructors\CreateClass.cshtml" />
+    <Content Include="Views\Instructors\CreateCourse.cshtml" />
     <Content Include="Views\Students\Edit.cshtml" />
-    <Content Include="Views\Classes\Delete.cshtml" />
-    <Content Include="Views\Classes\Details.cshtml" />
-    <Content Include="Views\Classes\Edit.cshtml" />
-    <Content Include="Views\Classes\Index.cshtml" />
-    <Content Include="Views\Instructors\ViewClasses.cshtml" />
+    <Content Include="Views\Courses\Delete.cshtml" />
+    <Content Include="Views\Courses\Details.cshtml" />
+    <Content Include="Views\Courses\Edit.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Instructors\ViewCourses.cshtml" />
     <Content Include="Views\Instructors\ViewStudents.cshtml" />
-    <Content Include="Views\Classes\AddStudent.cshtml" />
+    <Content Include="Views\Courses\AddStudent.cshtml" />
     <Content Include="Views\Resources\Create.cshtml" />
     <Content Include="Views\Resources\Delete.cshtml" />
     <Content Include="Views\Resources\Details.cshtml" />
@@ -362,8 +362,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807260321583_initialmig.resx">
-      <DependentUpon>201807260321583_initialmig.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807281934535_firstMigration.resx">
+      <DependentUpon>201807281934535_firstMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

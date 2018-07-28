@@ -1,4 +1,4 @@
-﻿@model PortalToKnowledge.Models.Class
+﻿@model PortalToKnowledge.Models.Course
 
 @{
     ViewBag.Title = "Edit";
@@ -14,7 +14,7 @@
         <h4>Class</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ClassId)
+        @Html.HiddenFor(model => model.CourseId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })

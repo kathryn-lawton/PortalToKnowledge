@@ -11,16 +11,16 @@ using PortalToKnowledge.ViewModels;
 
 namespace PortalToKnowledge.Controllers
 {
-    public class ClassesController : Controller
+    public class CoursesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Classes
+        // GET: Courses
         public ActionResult Index(int? id)
         {
 			if(id == null)
 			{
-				return View(db.Class.ToList());
+				return View(db.Course.ToList());
 			}
 			else
 			{
@@ -29,18 +29,18 @@ namespace PortalToKnowledge.Controllers
 				// Get all the classes related to their account - ToList
 				// return to view model
 
-				return View(db.Class.ToList());
+				return View(db.Course.ToList());
 			}
         }
 
-        // GET: Classes/Details/5
+        // GET: Courses/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Class model = db.Class.Where(c => c.ClassId == id).Include(c => c.Instructor).FirstOrDefault();
+            Course model = db.Course.Where(c => c.CourseId == id).Include(c => c.Instructor).FirstOrDefault();
             if (model == null)
             {
                 return HttpNotFound();
@@ -48,14 +48,14 @@ namespace PortalToKnowledge.Controllers
             return View(model);
         }
 
-        // GET: Classes/Edit/5
+        // GET: Courses/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Class model = db.Class.Find(id);
+            Course model = db.Course.Find(id);
             if (model == null)
             {
                 return HttpNotFound();
@@ -63,12 +63,12 @@ namespace PortalToKnowledge.Controllers
             return View(model);
         }
 
-        // POST: Classes/Edit/5
+        // POST: Courses/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ClassId,Name")] Class model)
+        public ActionResult Edit([Bind(Include = "CourseId,Name")] Course model)
         {
             if (ModelState.IsValid)
             {
@@ -79,14 +79,14 @@ namespace PortalToKnowledge.Controllers
             return View(model);
         }
 
-        // GET: Classes/Delete/5
+        // GET: Courses/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Class model = db.Class.Find(id);
+            Course model = db.Course.Find(id);
             if (model == null)
             {
                 return HttpNotFound();
@@ -94,13 +94,13 @@ namespace PortalToKnowledge.Controllers
             return View(model);
         }
 
-        // POST: Classes/Delete/5
+        // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Class model = db.Class.Find(id);
-            db.Class.Remove(model);
+            Course model = db.Course.Find(id);
+            db.Course.Remove(model);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -130,10 +130,10 @@ namespace PortalToKnowledge.Controllers
 
 			var model = new AddStudentViewModel()
 			{
-				ClassId = id.Value
+				CourseId = id.Value
 			};
 
-			var students = db.Student.Where(s => s.Classes.Where(c => c.ClassId == id).Count() == 0).ToList();
+			var students = db.Student.Where(s => s.Courses.Where(c => c.CourseId == id).Count() == 0).ToList();
 
 			ViewBag.StudentId =
 				new SelectList((from s in students
@@ -150,25 +150,25 @@ namespace PortalToKnowledge.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult AddStudent([Bind(Include = "ClassId,StudentId")] AddStudentViewModel model)
+		public ActionResult AddStudent([Bind(Include = "CourseId,StudentId")] AddStudentViewModel model)
 		{
 			if(model == null)
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 
-			var foundClass = db.Class.Where(c => c.ClassId == model.ClassId).FirstOrDefault();
+			var foundCourse = db.Course.Where(c => c.CourseId == model.CourseId).FirstOrDefault();
 			var foundStudent = db.Student.Where(s => s.StudentId == model.StudentId).FirstOrDefault();
 
-			if(foundClass == null || foundStudent == null)
+			if(foundCourse == null || foundStudent == null)
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 
-			foundClass.Students.Add(foundStudent);
+			foundCourse.Students.Add(foundStudent);
 			db.SaveChanges();
 
-			return RedirectToAction("Details", new { id = model.ClassId });
+			return RedirectToAction("Details", new { id = model.CourseId });
 		}
     }
 }

@@ -11,7 +11,7 @@ namespace PortalToKnowledge.Models
 	{
 		public Student()
 		{
-			this.Classes = new HashSet<Class>();
+			this.Courses = new HashSet<Course>();
 			this.Progresses = new HashSet<Progress>();
 		}
 
@@ -28,7 +28,7 @@ namespace PortalToKnowledge.Models
 		public string ApplicationUserId { get; set; }
 		public ApplicationUser ApplicationUser { get; set; }
 
-		public virtual ICollection<Class> Classes { get; set; }
+		public virtual ICollection<Course> Courses { get; set; }
 		public virtual ICollection<Progress> Progresses { get; set; }
 
 	}

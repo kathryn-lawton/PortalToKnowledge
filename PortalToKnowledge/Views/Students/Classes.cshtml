@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PortalToKnowledge.Models.Class>
+﻿@model IEnumerable<PortalToKnowledge.Models.Course>
 
 @{
     ViewBag.Title = "Index";
@@ -21,11 +21,11 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.ClassId }) |
-                @Html.ActionLink("Flashcards", "Flashcards", new { id = item.ClassId }) |
-                @Html.ActionLink("Notes", "Notes", new { id = item.ClassId }) |
-                @Html.ActionLink("Additional Resources", "Index", "Resources", new { id = item.ClassId }, null) |
-                @Html.ActionLink("Tasks", "Index", "ClassTasks", new { id = item.ClassId }, null) 
+                @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |
+                @Html.ActionLink("Flashcards", "Flashcards", new { id = item.CourseId }) |
+                @Html.ActionLink("Notes", "Notes", new { id = item.CourseId }) |
+                @Html.ActionLink("Additional Resources", "Index", "Resources", new { id = item.CourseId }, null) |
+                @Html.ActionLink("Tasks", "Index", "ClassTasks", new { id = item.CourseId }, null) 
             </td>
         </tr>
     }

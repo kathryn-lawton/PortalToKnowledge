@@ -23,14 +23,14 @@ namespace PortalToKnowledge.Controllers
 			{
 				var currentUserId = User.Identity.GetUserId();
 				var foundUser = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
-				var foundClasses = foundUser.Classes.ToList();
+				var foundClasses = foundUser.Courses.ToList();
 				return View(foundClasses);
 			}
 			else if (User.IsInRole("Instructor"))
 			{
 				var currentUserId = User.Identity.GetUserId();
 				var foundUser = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
-				var foundClasses = foundUser.Classes.ToList();
+				var foundClasses = foundUser.Courses.ToList();
 
 				return View(foundClasses);
 			}
@@ -45,7 +45,7 @@ namespace PortalToKnowledge.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ClassTask classTask = db.ClassTask.Where(c => c.ClassId == id).Include(c => c.Class).FirstOrDefault();
+            ClassTask classTask = db.ClassTask.Where(c => c.CourseId == id).Include(c => c.Course).FirstOrDefault();
             if (classTask == null)
             {
                 return HttpNotFound();
@@ -63,7 +63,7 @@ namespace PortalToKnowledge.Controllers
 
 			var classTask = new ClassTask()
 			{
-				ClassId = id.Value
+				CourseId = id.Value
 			};
 
 			ViewBag.MediaTypeId = new SelectList(db.MediaType, "Id", "Type", classTask.MediaTypeId);
@@ -76,7 +76,7 @@ namespace PortalToKnowledge.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ClassTaskId,TaskName, Link, ClassId,MediaTypeId")] ClassTask classTask)
+        public ActionResult Create([Bind(Include = "ClassTaskId,TaskName,Link,CourseId,MediaTypeId")] ClassTask classTask)
         {
             if (ModelState.IsValid)
             {
@@ -100,7 +100,7 @@ namespace PortalToKnowledge.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ClassId = new SelectList(db.Class, "ClassId", "Name", classTask.ClassId);
+            ViewBag.CourseId = new SelectList(db.Course, "CourseId", "Name", classTask.CourseId);
             return View(classTask);
         }
 
@@ -109,7 +109,7 @@ namespace PortalToKnowledge.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ClassTaskId,TaskName,ClassId")] ClassTask classTask)
+        public ActionResult Edit([Bind(Include = "ClassTaskId,TaskName,CourseId")] ClassTask classTask)
         {
             if (ModelState.IsValid)
             {
@@ -117,7 +117,7 @@ namespace PortalToKnowledge.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ClassId = new SelectList(db.Class, "ClassId", "Name", classTask.ClassId);
+            ViewBag.CourseId = new SelectList(db.Course, "CourseId", "Name", classTask.CourseId);
             return View(classTask);
         }
 

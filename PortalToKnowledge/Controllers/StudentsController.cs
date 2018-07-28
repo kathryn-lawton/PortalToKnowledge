@@ -99,7 +99,7 @@ namespace PortalToKnowledge.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Classes()
+		public ActionResult Courses()
 		{
 			var currentUserId = User.Identity.GetUserId();
 			if (currentUserId == null)
@@ -107,8 +107,8 @@ namespace PortalToKnowledge.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 			var foundStudent = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
-			var foundClasses = foundStudent.Classes.ToList();
-			return View(foundClasses);
+			var foundCourses = foundStudent.Courses.ToList();
+			return View(foundCourses);
 		}
 
 		public ActionResult Notes()

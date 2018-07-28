@@ -8,7 +8,7 @@ namespace PortalToKnowledge.ViewModels
 {
 	public class AddStudentViewModel
 	{
-		public int ClassId { get; set; }
+		public int CourseId { get; set; }
 		public int StudentId { get; set; }
 	}
 }
