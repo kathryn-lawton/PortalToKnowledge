@@ -81,8 +81,21 @@ namespace PortalToKnowledge.Controllers
             if (ModelState.IsValid)
             {
                 db.Assignment.Add(assignment);
+				db.SaveChanges();
+				var students = db.Course.Where(c => c.CourseId == assignment.CourseId).FirstOrDefault().Students.ToList();
+				foreach(var student in students)
+				{
+					Progress progress = new Progress()
+					{
+						StudentId = student.StudentId,
+						AssignmentId = assignment.AssignmentId,
+						Status = false
+					};
+					db.Progress.Add(progress);
+				}
+				
 				// Create and Add progress record for each student for this assignment
-                db.SaveChanges();
+				db.SaveChanges();
                 return RedirectToAction("Index");
             }
 

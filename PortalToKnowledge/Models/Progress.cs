@@ -18,8 +18,8 @@ namespace PortalToKnowledge.Models
 		public int StudentId { get; set; }
 		public Student Student { get; set; }
 
-		[ForeignKey("Course")]
-		public int CourseId { get; set; }
-		public Course Course { get; set; }
+		[ForeignKey("Assignment")]
+		public int AssignmentId { get; set; }
+		public Assignment Assignment { get; set; }
 	}
 }

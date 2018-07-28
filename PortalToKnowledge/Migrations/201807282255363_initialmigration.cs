@@ -3,7 +3,7 @@ namespace PortalToKnowledge.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class firstMigration : DbMigration
+    public partial class initialmigration : DbMigration
     {
         public override void Up()
         {
@@ -85,6 +85,7 @@ namespace PortalToKnowledge.Migrations
                     {
                         AssignmentId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
+                        DueDate = c.String(),
                         Link = c.String(),
                         MediaTypeId = c.Int(nullable: false),
                         CourseId = c.Int(nullable: false),
@@ -140,13 +141,13 @@ namespace PortalToKnowledge.Migrations
                         ProgressId = c.Int(nullable: false, identity: true),
                         Status = c.Boolean(nullable: false),
                         StudentId = c.Int(nullable: false),
-                        CourseId = c.Int(nullable: false),
+                        AssignmentId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ProgressId)
-                .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
+                .ForeignKey("dbo.Assignments", t => t.AssignmentId, cascadeDelete: true)
                 .ForeignKey("dbo.Students", t => t.StudentId, cascadeDelete: true)
                 .Index(t => t.StudentId)
-                .Index(t => t.CourseId);
+                .Index(t => t.AssignmentId);
             
             CreateTable(
                 "dbo.MediaTypes",
@@ -237,7 +238,7 @@ namespace PortalToKnowledge.Migrations
             DropForeignKey("dbo.Assignments", "MediaTypeId", "dbo.MediaTypes");
             DropForeignKey("dbo.Assignments", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.Progresses", "StudentId", "dbo.Students");
-            DropForeignKey("dbo.Progresses", "CourseId", "dbo.Courses");
+            DropForeignKey("dbo.Progresses", "AssignmentId", "dbo.Assignments");
             DropForeignKey("dbo.StudentCourses", "Course_CourseId", "dbo.Courses");
             DropForeignKey("dbo.StudentCourses", "Student_StudentId", "dbo.Students");
             DropForeignKey("dbo.Students", "ApplicationUserId", "dbo.AspNetUsers");
@@ -253,7 +254,7 @@ namespace PortalToKnowledge.Migrations
             DropIndex("dbo.Resources", new[] { "ZipcodeId" });
             DropIndex("dbo.Resources", new[] { "StateId" });
             DropIndex("dbo.Resources", new[] { "CityId" });
-            DropIndex("dbo.Progresses", new[] { "CourseId" });
+            DropIndex("dbo.Progresses", new[] { "AssignmentId" });
             DropIndex("dbo.Progresses", new[] { "StudentId" });
             DropIndex("dbo.Students", new[] { "ApplicationUserId" });
             DropIndex("dbo.Instructors", new[] { "ApplicationUserId" });

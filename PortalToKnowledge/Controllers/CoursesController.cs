@@ -167,6 +167,18 @@ namespace PortalToKnowledge.Controllers
 
 			foundCourse.Students.Add(foundStudent);
 			db.SaveChanges();
+			var assignments = foundCourse.Assignments.ToList();
+			foreach (var assignment in assignments)
+			{
+				Progress progress = new Progress()
+				{
+					StudentId = foundStudent.StudentId,
+					AssignmentId = assignment.AssignmentId,
+					Status = false
+				};
+				db.Progress.Add(progress);
+			}
+			db.SaveChanges();
 
 			return RedirectToAction("Details", new { id = model.CourseId });
 		}
