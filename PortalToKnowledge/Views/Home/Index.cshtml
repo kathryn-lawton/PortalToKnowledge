@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<PortalToKnowledge.Models.Assignment>
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -38,3 +39,10 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
+
+@foreach(var assignment in Model)
+{
+    <script>    
+        alert("@assignment.Name is due soon!");
+    </script>
+}

@@ -222,6 +222,10 @@
     <Compile Include="Migrations\201807282010479_firstMigration.Designer.cs">
       <DependentUpon>201807282010479_firstMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807282035501_duedatemig.cs" />
+    <Compile Include="Migrations\201807282035501_duedatemig.Designer.cs">
+      <DependentUpon>201807282035501_duedatemig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -311,7 +315,7 @@
     <Content Include="Views\Instructors\Create.cshtml" />
     <Content Include="Views\Students\Create.cshtml" />
     <Content Include="Views\Students\Details.cshtml" />
-    <Content Include="Views\Students\Classes.cshtml" />
+    <Content Include="Views\Students\Courses.cshtml" />
     <Content Include="Views\Students\Flashcards.cshtml" />
     <Content Include="Views\Students\Notes.cshtml" />
     <Content Include="Views\Instructors\CreateCourse.cshtml" />
@@ -364,6 +368,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201807282010479_firstMigration.resx">
       <DependentUpon>201807282010479_firstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807282035501_duedatemig.resx">
+      <DependentUpon>201807282035501_duedatemig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

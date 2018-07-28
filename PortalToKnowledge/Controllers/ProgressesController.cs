@@ -35,8 +35,14 @@ namespace PortalToKnowledge.Controllers
             return View(progress);
         }
 
-        // GET: Progresses/Create
-        public ActionResult Create()
+		public ActionResult CourseProgress(int courseId, int studentId)
+		{
+			// Create view for progress for student in this class with progress bar
+			// Lookup the student in the class and get their progress for the class
+		}
+
+		// GET: Progresses/Create
+		public ActionResult Create()
         {
             return View();
         }

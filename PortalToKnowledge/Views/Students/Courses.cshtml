@@ -21,7 +21,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |
+                @Html.ActionLink("Details", "Details", "Courses", new { id = item.CourseId }, null) |
                 @Html.ActionLink("Flashcards", "Flashcards", new { id = item.CourseId }) |
                 @Html.ActionLink("Notes", "Notes", new { id = item.CourseId }) |
                 @Html.ActionLink("Additional Resources", "Index", "Resources", new { id = item.CourseId }, null) |

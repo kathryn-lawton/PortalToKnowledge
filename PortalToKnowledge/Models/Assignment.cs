@@ -13,6 +13,10 @@ namespace PortalToKnowledge.Models
 		public int AssignmentId { get; set; }
 
 		public string Name { get; set; }
+		
+		[Display(Name = "Due Date")]
+		public string DueDate { get; set; }
+
 		public string Link { get; set; }
 
 		[ForeignKey("MediaType")]

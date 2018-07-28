@@ -73,6 +73,11 @@ namespace PortalToKnowledge.Controllers
 			var currentUserId = User.Identity.GetUserId();
 			var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
 
+			if(foundInstructor == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
 			return View(foundInstructor.Courses.ToList());
 		}
 

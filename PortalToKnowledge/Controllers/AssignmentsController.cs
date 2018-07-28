@@ -45,7 +45,7 @@ namespace PortalToKnowledge.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assignment assignment = db.Assignment.Where(c => c.CourseId == id).Include(c => c.Course).FirstOrDefault();
+            Assignment assignment = db.Assignment.Where(a => a.AssignmentId == id).Include(a => a.Course).Include(a => a.MediaType).FirstOrDefault();
             if (assignment == null)
             {
                 return HttpNotFound();
@@ -76,11 +76,12 @@ namespace PortalToKnowledge.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AssignmentId,Name,Link,CourseId,MediaTypeId")] Assignment assignment)
+        public ActionResult Create([Bind(Include = "AssignmentId,Name,DueDate,Link,CourseId,MediaTypeId")] Assignment assignment)
         {
             if (ModelState.IsValid)
             {
                 db.Assignment.Add(assignment);
+				// Create and Add progress record for each student for this assignment
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -95,13 +96,15 @@ namespace PortalToKnowledge.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Assignment assignment = db.Assignment.Find(id);
+            Assignment assignment = db.Assignment.Where(a => a.AssignmentId == id).Include(a => a.MediaType).Include(a => a.Course).FirstOrDefault();
             if (assignment == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.CourseId = new SelectList(db.Course, "CourseId", "Name", assignment.CourseId);
-            return View(assignment);
+			ViewBag.MediaTypeId = new SelectList(db.MediaType, "Id", "Type", assignment.MediaTypeId);
+			return View(assignment);
         }
 
         // POST: Assignments/Edit/5
@@ -109,7 +112,7 @@ namespace PortalToKnowledge.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AssignmentId,Name,CourseId")] Assignment assignment)
+        public ActionResult Edit([Bind(Include = "AssignmentId,Name,Link,MediaTypeId,DueDate,CourseId")] Assignment assignment)
         {
             if (ModelState.IsValid)
             {
@@ -118,7 +121,8 @@ namespace PortalToKnowledge.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CourseId = new SelectList(db.Course, "CourseId", "Name", assignment.CourseId);
-            return View(assignment);
+			ViewBag.MediaTypeId = new SelectList(db.MediaType, "MediaTypeId", "Type", assignment.MediaTypeId);
+			return View(assignment);
         }
 
         // GET: Assignments/Delete/5

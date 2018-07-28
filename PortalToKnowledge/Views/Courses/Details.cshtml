@@ -31,12 +31,31 @@
         </dt>
         <dd></dd>
 
-        @foreach(var student in Model.Students)
+        @foreach (var student in Model.Students)
         {
             <dt></dt>
 
             <dd>
-                @student.FirstName @student.LastName @Html.ActionLink("Remove", "RemoveStudent", new { id = student.StudentId })
+                @student.FirstName @student.LastName 
+                @if(User.IsInRole("Instructor")) { @Html.ActionLink("Remove", "RemoveStudent", new { id = student.StudentId })}
+            </dd>
+        }
+        <dt>
+
+        </dt>
+
+        <dt>
+            Assignments:
+        </dt>
+        <dd></dd>
+
+        @foreach (var assignment in Model.Assignments)
+        {
+            <dt></dt>
+
+            <dd>
+                @assignment.Name @assignment.DueDate 
+                @if (User.IsInRole("Istructor")) {@Html.ActionLink("Remove", "Delete", "Assignments", new { id = assignment.AssignmentId }, null)}
             </dd>
         }
         <dt>
@@ -47,7 +66,18 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
-    @Html.ActionLink("Add Students", "AddStudent", new { id = Model.CourseId }) |
-    @Html.ActionLink("Back to Courses", "ViewCourses", "Instructors")
+    @if (User.IsInRole("Instructor"))
+    {
+        <div>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
+            @Html.ActionLink("Add Students", "AddStudent", new { id = Model.CourseId }) |
+            @Html.ActionLink("Back to Courses", "ViewCourses", "Instructors")
+        </div>
+    }
+    else
+    {
+        <div>
+            @Html.ActionLink("Back to Courses", "Courses", "Students")
+        </div>
+    }
 </p>
