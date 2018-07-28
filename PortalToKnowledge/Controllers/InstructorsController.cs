@@ -86,49 +86,6 @@ namespace PortalToKnowledge.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult AddStudent(int? id)
-		{
-			if (id == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
-
-			var model = db.Student.ToList();
-			return View(model);
-		}
-
-		[HttpGet]
-		public ActionResult AddStudent()
-		{
-			var currentUserId = User.Identity.GetUserId();
-			var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
-
-			if(foundInstructor == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
-
-			var students = db.Student.ToList(); //.Where(s => s.Instructors.Where(i => i.InstructorId == foundInstructor.InstructorId).Count() == 0).ToList();
-			return View(students);
-		}
-
-		[HttpPost]
-		public ActionResult AddStudent(Student model)
-		{
-			var currentUserId = User.Identity.GetUserId();
-			var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
-
-			if (model == null || foundInstructor == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
-
-			db.SaveChanges();
-
-			return RedirectToAction("ViewStudents");
-		}
-
-		[HttpGet]
 		public ActionResult Details(int? id)
 		{
 			Instructor instructor;

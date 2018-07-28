@@ -7,13 +7,12 @@ using System.Web;
 
 namespace PortalToKnowledge.Models
 {
-	public class ClassTask
+	public class Assignment
 	{
 		[Key]
-		public int ClassTaskId { get; set; }
+		public int AssignmentId { get; set; }
 
-		[Display (Name = "Task Name")]
-		public string TaskName { get; set; }
+		public string Name { get; set; }
 		public string Link { get; set; }
 
 		[ForeignKey("MediaType")]

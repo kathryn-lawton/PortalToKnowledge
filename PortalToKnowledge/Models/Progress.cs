@@ -12,7 +12,7 @@ namespace PortalToKnowledge.Models
 		[Key]
 		public int ProgressId { get; set; }
 
-		public bool TaskStatus { get; set; }
+		public bool Status { get; set; }
 
 		[ForeignKey("Student")]
 		public int StudentId { get; set; }

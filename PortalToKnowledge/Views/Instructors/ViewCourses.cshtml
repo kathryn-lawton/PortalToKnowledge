@@ -26,7 +26,7 @@
             <td>
                 @Html.ActionLink("View Class", "Details", "Courses", new { id = item.CourseId }, null) |
                 @Html.ActionLink("Add Student", "AddStudent", "Courses", new { id = item.CourseId }, null) |
-                @Html.ActionLink("Add Task", "Create", "ClassTasks", new { id = item.CourseId }, null) |
+                @Html.ActionLink("Add Assignment", "Create", "Assignments", new { id = item.CourseId }, null) |
                 @Html.ActionLink("Add Resource", "Create", "Resources", new { id = item.CourseId }, null) |
                 @Html.ActionLink("Delete", "Delete", "Courses", new { id = item.CourseId }, null)
             </td>

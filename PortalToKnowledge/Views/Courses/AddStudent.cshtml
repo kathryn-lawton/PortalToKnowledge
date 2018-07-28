@@ -6,13 +6,12 @@
 
 <h2>AddStudent</h2>
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>Class</h4>
+    <h4>Course</h4>
     <hr />
 
     @Html.HiddenFor(model => model.CourseId)

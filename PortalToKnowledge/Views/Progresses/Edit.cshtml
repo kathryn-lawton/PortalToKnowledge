@@ -17,11 +17,11 @@
         @Html.HiddenFor(model => model.ProgressId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TaskStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.TaskStatus)
-                    @Html.ValidationMessageFor(model => model.TaskStatus, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Status)
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

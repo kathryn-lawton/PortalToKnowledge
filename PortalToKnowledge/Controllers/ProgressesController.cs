@@ -46,7 +46,7 @@ namespace PortalToKnowledge.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProgressId,TaskStatus")] Progress progress)
+        public ActionResult Create([Bind(Include = "ProgressId,Status")] Progress progress)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace PortalToKnowledge.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProgressId,TaskStatus")] Progress progress)
+        public ActionResult Edit([Bind(Include = "ProgressId,Status")] Progress progress)
         {
             if (ModelState.IsValid)
             {

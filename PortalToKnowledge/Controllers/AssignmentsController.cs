@@ -12,11 +12,11 @@ using PortalToKnowledge.Models;
 
 namespace PortalToKnowledge.Controllers
 {
-    public class ClassTasksController : Controller
+    public class AssignmentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: ClassTasks
+        // GET: Assignments
         public ActionResult Index()
         {
 			if (User.IsInRole("Student"))
@@ -38,22 +38,22 @@ namespace PortalToKnowledge.Controllers
 			return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-		// GET: ClassTasks/Details/5
+		// GET: Assignments/Details/5
 		public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ClassTask classTask = db.ClassTask.Where(c => c.CourseId == id).Include(c => c.Course).FirstOrDefault();
-            if (classTask == null)
+            Assignment assignment = db.Assignment.Where(c => c.CourseId == id).Include(c => c.Course).FirstOrDefault();
+            if (assignment == null)
             {
                 return HttpNotFound();
             }
-            return View(classTask);
+            return View(assignment);
         }
 
-        // GET: ClassTasks/Create
+        // GET: Assignments/Create
         public ActionResult Create(int? id)
         {
 			if(id == null)
@@ -61,88 +61,88 @@ namespace PortalToKnowledge.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 
-			var classTask = new ClassTask()
+			var assignment = new Assignment()
 			{
 				CourseId = id.Value
 			};
 
-			ViewBag.MediaTypeId = new SelectList(db.MediaType, "Id", "Type", classTask.MediaTypeId);
+			ViewBag.MediaTypeId = new SelectList(db.MediaType, "Id", "Type", assignment.MediaTypeId);
 
-			return View(classTask);
+			return View(assignment);
         }
 
-        // POST: ClassTasks/Create
+        // POST: Assignments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ClassTaskId,TaskName,Link,CourseId,MediaTypeId")] ClassTask classTask)
+        public ActionResult Create([Bind(Include = "AssignmentId,Name,Link,CourseId,MediaTypeId")] Assignment assignment)
         {
             if (ModelState.IsValid)
             {
-                db.ClassTask.Add(classTask);
+                db.Assignment.Add(assignment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(classTask);
+            return View(assignment);
         }
 
-        // GET: ClassTasks/Edit/5
+        // GET: Assignments/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ClassTask classTask = db.ClassTask.Find(id);
-            if (classTask == null)
+            Assignment assignment = db.Assignment.Find(id);
+            if (assignment == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CourseId = new SelectList(db.Course, "CourseId", "Name", classTask.CourseId);
-            return View(classTask);
+            ViewBag.CourseId = new SelectList(db.Course, "CourseId", "Name", assignment.CourseId);
+            return View(assignment);
         }
 
-        // POST: ClassTasks/Edit/5
+        // POST: Assignments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ClassTaskId,TaskName,CourseId")] ClassTask classTask)
+        public ActionResult Edit([Bind(Include = "AssignmentId,Name,CourseId")] Assignment assignment)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(classTask).State = EntityState.Modified;
+                db.Entry(assignment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CourseId = new SelectList(db.Course, "CourseId", "Name", classTask.CourseId);
-            return View(classTask);
+            ViewBag.CourseId = new SelectList(db.Course, "CourseId", "Name", assignment.CourseId);
+            return View(assignment);
         }
 
-        // GET: ClassTasks/Delete/5
+        // GET: Assignments/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ClassTask classTask = db.ClassTask.Find(id);
-            if (classTask == null)
+            Assignment assignment = db.Assignment.Find(id);
+            if (assignment == null)
             {
                 return HttpNotFound();
             }
-            return View(classTask);
+            return View(assignment);
         }
 
-        // POST: ClassTasks/Delete/5
+        // POST: Assignments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ClassTask classTask = db.ClassTask.Find(id);
-            db.ClassTask.Remove(classTask);
+            Assignment assignment = db.Assignment.Find(id);
+            db.Assignment.Remove(assignment);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

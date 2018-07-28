@@ -1,4 +1,4 @@
-﻿@model PortalToKnowledge.Models.ClassTask
+﻿@model PortalToKnowledge.Models.Assignment
 
 @{
     ViewBag.Title = "Details";
@@ -19,16 +19,16 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TaskName)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TaskName)
+            @Html.DisplayFor(model => model.Name)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ClassTaskId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AssignmentId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    
 </p>
 <table class="table">
     <tr>
@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ClassTasks)
+            @Html.DisplayNameFor(model => model.Assignments)
         </th>
         <th></th>
     </tr>
@@ -27,11 +27,14 @@
         </td>
         <td>
             <ul>
-            @foreach(var classTask in item.ClassTasks)
+            @foreach(var assignment in item.Assignments)
             {
-                <li>@classTask.TaskName |@Html.ActionLink("Details", "Details", new { id = classTask.ClassTaskId }) </li>
+                <li>@assignment.Name | @Html.ActionLink("Details", "Details", new { id = assignment.AssignmentId }) </li>
             }
             </ul>
+        </td>
+        <td>
+            @Html.ActionLink("Add Assignment", "Create", new { id = item.CourseId })
         </td>
     </tr>
 }

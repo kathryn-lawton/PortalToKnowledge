@@ -12,7 +12,7 @@ namespace PortalToKnowledge.Models
 		public Course()
 		{
 			this.Students = new HashSet<Student>();
-			this.ClassTasks = new HashSet<ClassTask>();
+			this.Assignments = new HashSet<Assignment>();
 		}
 
 		[Key]
@@ -24,6 +24,6 @@ namespace PortalToKnowledge.Models
 		public Instructor Instructor { get; set; }
 
 		public virtual ICollection<Student> Students { get; set; }
-		public virtual ICollection<ClassTask> ClassTasks { get; set; }
+		public virtual ICollection<Assignment> Assignments { get; set; }
 	}
 }

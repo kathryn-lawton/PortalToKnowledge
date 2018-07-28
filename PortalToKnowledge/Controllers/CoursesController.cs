@@ -55,7 +55,7 @@ namespace PortalToKnowledge.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course model = db.Course.Find(id);
+            Course model = db.Course.Where(c => c.CourseId == id).Include(c => c.Instructor).FirstOrDefault();
             if (model == null)
             {
                 return HttpNotFound();
@@ -68,7 +68,7 @@ namespace PortalToKnowledge.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CourseId,Name")] Course model)
+        public ActionResult Edit([Bind(Include = "CourseId,Name,InstructorId")] Course model)
         {
             if (ModelState.IsValid)
             {

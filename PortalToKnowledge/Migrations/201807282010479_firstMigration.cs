@@ -80,25 +80,16 @@ namespace PortalToKnowledge.Migrations
                 .Index(t => t.RoleId);
             
             CreateTable(
-                "dbo.Cities",
+                "dbo.Assignments",
                 c => new
                     {
-                        CityId = c.Int(nullable: false, identity: true),
+                        AssignmentId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                    })
-                .PrimaryKey(t => t.CityId);
-            
-            CreateTable(
-                "dbo.ClassTasks",
-                c => new
-                    {
-                        ClassTaskId = c.Int(nullable: false, identity: true),
-                        TaskName = c.String(),
                         Link = c.String(),
                         MediaTypeId = c.Int(nullable: false),
                         CourseId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.ClassTaskId)
+                .PrimaryKey(t => t.AssignmentId)
                 .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
                 .ForeignKey("dbo.MediaTypes", t => t.MediaTypeId, cascadeDelete: true)
                 .Index(t => t.MediaTypeId)
@@ -147,7 +138,7 @@ namespace PortalToKnowledge.Migrations
                 c => new
                     {
                         ProgressId = c.Int(nullable: false, identity: true),
-                        TaskStatus = c.Boolean(nullable: false),
+                        Status = c.Boolean(nullable: false),
                         StudentId = c.Int(nullable: false),
                         CourseId = c.Int(nullable: false),
                     })
@@ -165,6 +156,15 @@ namespace PortalToKnowledge.Migrations
                         Type = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Cities",
+                c => new
+                    {
+                        CityId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.CityId);
             
             CreateTable(
                 "dbo.Resources",
@@ -234,8 +234,8 @@ namespace PortalToKnowledge.Migrations
             DropForeignKey("dbo.Resources", "ZipcodeId", "dbo.Zipcodes");
             DropForeignKey("dbo.Resources", "StateId", "dbo.States");
             DropForeignKey("dbo.Resources", "CityId", "dbo.Cities");
-            DropForeignKey("dbo.ClassTasks", "MediaTypeId", "dbo.MediaTypes");
-            DropForeignKey("dbo.ClassTasks", "CourseId", "dbo.Courses");
+            DropForeignKey("dbo.Assignments", "MediaTypeId", "dbo.MediaTypes");
+            DropForeignKey("dbo.Assignments", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.Progresses", "StudentId", "dbo.Students");
             DropForeignKey("dbo.Progresses", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.StudentCourses", "Course_CourseId", "dbo.Courses");
@@ -258,8 +258,8 @@ namespace PortalToKnowledge.Migrations
             DropIndex("dbo.Students", new[] { "ApplicationUserId" });
             DropIndex("dbo.Instructors", new[] { "ApplicationUserId" });
             DropIndex("dbo.Courses", new[] { "InstructorId" });
-            DropIndex("dbo.ClassTasks", new[] { "CourseId" });
-            DropIndex("dbo.ClassTasks", new[] { "MediaTypeId" });
+            DropIndex("dbo.Assignments", new[] { "CourseId" });
+            DropIndex("dbo.Assignments", new[] { "MediaTypeId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
@@ -271,13 +271,13 @@ namespace PortalToKnowledge.Migrations
             DropTable("dbo.Zipcodes");
             DropTable("dbo.States");
             DropTable("dbo.Resources");
+            DropTable("dbo.Cities");
             DropTable("dbo.MediaTypes");
             DropTable("dbo.Progresses");
             DropTable("dbo.Students");
             DropTable("dbo.Instructors");
             DropTable("dbo.Courses");
-            DropTable("dbo.ClassTasks");
-            DropTable("dbo.Cities");
+            DropTable("dbo.Assignments");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
