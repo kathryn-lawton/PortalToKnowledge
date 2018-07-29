@@ -28,7 +28,9 @@
     </dl>
 </div>
 
-@foreach (var item in Model.Student.Courses)
+@if (User.IsInRole("Student"))
+{
+foreach (var item in Model.Student.Courses)
 {
     <tr>
         <td>
@@ -38,6 +40,7 @@
             <div class="progress-bar progress-bar-info" style="width: @Model.progressPercentageMap[item.CourseId]%;"></div>
         </div>
     </tr>
+}
 }
 
 <p>

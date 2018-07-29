@@ -240,6 +240,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AddStudentViewModel.cs" />
+    <Compile Include="ViewModels\InstructorCourseViewModel.cs" />
     <Compile Include="ViewModels\QuizletResponse.cs" />
     <Compile Include="ViewModels\StudentViewModel.cs" />
   </ItemGroup>
@@ -345,6 +346,8 @@
     <Content Include="Views\Instructors\Edit.cshtml" />
     <Content Include="Views\Instructors\Delete.cshtml" />
     <Content Include="Views\Students\CurrentTasks.cshtml" />
+    <Content Include="Views\Students\ViewAssignment.cshtml" />
+    <Content Include="Views\Courses\RemoveStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

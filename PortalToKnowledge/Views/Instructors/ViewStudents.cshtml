@@ -1,23 +1,23 @@
-﻿@model IEnumerable<PortalToKnowledge.Models.Course>
+﻿@model PortalToKnowledge.ViewModels.InstructorCourseViewModel
 
 @{
     ViewBag.Title = "ViewStudents";
 }
 
-<h2>ViewStudents</h2>
+<h2>Students</h2>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Courses
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Students)
+            Students
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Courses)
     {
     <tr>
         <td>
@@ -28,9 +28,12 @@
             @foreach(var student in item.Students)
             {
                 <li>
-                    @student.FirstName 
-                    @student.LastName |
-                    @Html.ActionLink("Check Progress", "StudentProgress", new { studentId = student.StudentId, courseId = item.CourseId }) |
+                    @student.FirstName
+                    @student.LastName 
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info" style="width: @Model.CourseStudentProgress[item.CourseId][student.StudentId]%;"></div>
+                    </div>
+                    @Html.ActionLink("Details", "Details", "Students", new { id = student.StudentId}, null) |
                     @Html.ActionLink("Remove", "RemoveStudent", "Courses", new { id = student.StudentId }, null)
                 </li>
             }

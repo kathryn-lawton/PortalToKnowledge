@@ -3,6 +3,7 @@ using PortalToKnowledge.Models;
 using PortalToKnowledge.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -71,20 +72,22 @@ namespace PortalToKnowledge.Controllers
 			Dictionary<int, int> percentageMap = new Dictionary<int, int>();
 			foreach(var course in student.Courses)
 			{
-				int numberOfAssignments = 0;
 				int completedAssignments = 0;
 
 				foreach (var assignment in course.Assignments)
 				{
 					var progress = db.Progress.Where(p => p.StudentId == student.StudentId && p.AssignmentId == assignment.AssignmentId).FirstOrDefault();
-					numberOfAssignments++;
 					if(progress.Status)
 					{
 						completedAssignments++;
 					}
 				}
 
-				int wholePercentage = (completedAssignments * 100) / numberOfAssignments;
+				int wholePercentage = 0;
+				if(course.Assignments.Count() > 0)
+				{
+					wholePercentage = (completedAssignments * 100) / course.Assignments.Count();
+				}
 				percentageMap.Add(course.CourseId, wholePercentage);
 			}
 
@@ -130,11 +133,13 @@ namespace PortalToKnowledge.Controllers
 		public ActionResult Courses()
 		{
 			var currentUserId = User.Identity.GetUserId();
-			if (currentUserId == null)
+			var foundStudent = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
+
+			if (foundStudent == null)
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			var foundStudent = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
+
 			var foundCourses = foundStudent.Courses.ToList();
 			return View(foundCourses);
 		}
@@ -147,10 +152,6 @@ namespace PortalToKnowledge.Controllers
 		[HttpGet]
 		public ActionResult Flashcards()
 		{
-			//if(id == null)
-			//{
-			//	return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			//}
 			QuizletResponse quizletResponse;
 			using (var client = new HttpClient())
 			{
@@ -182,6 +183,39 @@ namespace PortalToKnowledge.Controllers
 			return View(quizletResponse);
 		}
 
+		[HttpGet]
+		public ActionResult ViewAssignment(int? id)
+		{
+			if(id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
 
+			var assignment = db.Assignment.Where(a => a.AssignmentId == id).Include(a => a.MediaType).FirstOrDefault();
+			return View(assignment);
+		}
+
+		[HttpPost]
+		public ActionResult ViewAssignment(Assignment model)
+		{
+			if(model == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var currentUserId = User.Identity.GetUserId();
+			var foundStudent = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
+
+			if (foundStudent == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var progress = db.Progress.Where(p => p.AssignmentId == model.AssignmentId && p.StudentId == foundStudent.StudentId).FirstOrDefault();
+			progress.Status = true;
+			db.SaveChanges();
+
+			return RedirectToAction("Courses");
+		}
 	}
 }

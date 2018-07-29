@@ -11,6 +11,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
+        <th>
+            Assignments
+        </th>
         <th></th>
     </tr>
 
@@ -19,6 +22,17 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <ul>
+                    @foreach(var assignment in item.Assignments)
+                    {
+                        <li>
+                            @assignment.Name |
+                            @Html.ActionLink("View Assignment", "ViewAssignment", new { id = assignment.AssignmentId})
+                        </li>
+                    }
+                </ul>
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", "Courses", new { id = item.CourseId }, null) |

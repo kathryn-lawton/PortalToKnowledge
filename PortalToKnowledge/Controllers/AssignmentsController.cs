@@ -164,6 +164,20 @@ namespace PortalToKnowledge.Controllers
             return RedirectToAction("Index");
         }
 
+		public ActionResult CompleteProgress(int? id)
+		{
+
+			if(id == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var progressRecord = db.Progress.Where(p => p.ProgressId == id).FirstOrDefault();
+			progressRecord.Status = true;
+			db.SaveChanges();
+			return RedirectToAction("Index", "Students");
+		}
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

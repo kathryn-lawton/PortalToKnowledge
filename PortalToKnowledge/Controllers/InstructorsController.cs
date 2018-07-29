@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using PortalToKnowledge.Models;
+using PortalToKnowledge.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -87,7 +88,37 @@ namespace PortalToKnowledge.Controllers
 			var currentUserId = User.Identity.GetUserId();
 			var foundInstructor = db.Instrutor.Where(i => i.ApplicationUserId == currentUserId).FirstOrDefault();
 
-			return View(foundInstructor.Courses.ToList());
+			var courseStudentProgressMap = new Dictionary<int, Dictionary<int, int>>();
+			foreach (var course in foundInstructor.Courses)
+			{
+				int completedAssignments = 0;
+				Dictionary<int, int> percentageMap = new Dictionary<int, int>();
+				foreach (var student in course.Students)
+				{
+					foreach (var assignment in course.Assignments)
+					{
+						var progress = db.Progress.Where(p => p.AssignmentId == assignment.AssignmentId && p.StudentId == student.StudentId).FirstOrDefault();
+						if(progress.Status)
+						{
+							completedAssignments++;
+						}
+					}
+					int wholePercentage = 0;
+					if (course.Assignments.Count > 0)
+					{
+						wholePercentage = (completedAssignments * 100) / course.Assignments.Count();
+					}
+					percentageMap.Add(student.StudentId, wholePercentage);
+				}
+				courseStudentProgressMap.Add(course.CourseId, percentageMap);
+			}
+
+			var model = new InstructorCourseViewModel()
+			{
+				Courses = foundInstructor.Courses.ToList(),
+				CourseStudentProgress = courseStudentProgressMap
+			};
+			return View(model);
 		}
 
 		[HttpGet]
