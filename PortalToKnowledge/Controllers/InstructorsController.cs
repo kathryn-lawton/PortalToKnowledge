@@ -91,10 +91,10 @@ namespace PortalToKnowledge.Controllers
 			var courseStudentProgressMap = new Dictionary<int, Dictionary<int, int>>();
 			foreach (var course in foundInstructor.Courses)
 			{
-				int completedAssignments = 0;
 				Dictionary<int, int> percentageMap = new Dictionary<int, int>();
 				foreach (var student in course.Students)
 				{
+					int completedAssignments = 0;
 					foreach (var assignment in course.Assignments)
 					{
 						var progress = db.Progress.Where(p => p.AssignmentId == assignment.AssignmentId && p.StudentId == student.StudentId).FirstOrDefault();

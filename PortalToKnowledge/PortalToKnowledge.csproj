@@ -218,9 +218,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Keys.cs" />
-    <Compile Include="Migrations\201807282255363_initialmigration.cs" />
-    <Compile Include="Migrations\201807282255363_initialmigration.Designer.cs">
-      <DependentUpon>201807282255363_initialmigration.cs</DependentUpon>
+    <Compile Include="Migrations\201807301547214_initialmigration.cs" />
+    <Compile Include="Migrations\201807301547214_initialmigration.Designer.cs">
+      <DependentUpon>201807301547214_initialmigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -231,6 +231,7 @@
     <Compile Include="Models\Instructor.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MediaType.cs" />
+    <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Progress.cs" />
     <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\State.cs" />
@@ -245,17 +246,17 @@
     <Compile Include="ViewModels\StudentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-cosmo.css" />
     <Content Include="Content\bootstrap-journal.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-yeti.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\BWG-Print-background.jpg" />
+    <Content Include="Images\staircase.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -367,8 +368,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807282255363_initialmigration.resx">
-      <DependentUpon>201807282255363_initialmigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807301547214_initialmigration.resx">
+      <DependentUpon>201807301547214_initialmigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -138,7 +138,7 @@ namespace PortalToKnowledge.Controllers
 			var student = db.Student.Where(s => s.StudentId == model.StudentId).FirstOrDefault();
 			course.Students.Remove(student);
 			db.SaveChanges();
-			return RedirectToAction("ViewStudents", "Instructor", null); 
+			return RedirectToAction("ViewStudents", "Instructors", null); 
 		}
 
 		[HttpGet]

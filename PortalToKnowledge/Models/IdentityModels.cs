@@ -43,5 +43,6 @@ namespace PortalToKnowledge.Models
 		public DbSet<Zipcode> Zipcode { get; set; }
 		public DbSet<Assignment> Assignment { get; set; }
 		public DbSet<Progress> Progress { get; set; }
+		public DbSet<Note> Note { get; set; }
 	}
 }

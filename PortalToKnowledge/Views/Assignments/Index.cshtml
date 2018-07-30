@@ -34,7 +34,10 @@
             </ul>
         </td>
         <td>
+            @if (User.IsInRole("Instructor"))
+            {
             @Html.ActionLink("Add Assignment", "Create", new { id = item.CourseId })
+            }
         </td>
     </tr>
 }

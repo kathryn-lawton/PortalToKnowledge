@@ -168,6 +168,22 @@ namespace PortalToKnowledge.Migrations
                 .PrimaryKey(t => t.CityId);
             
             CreateTable(
+                "dbo.Notes",
+                c => new
+                    {
+                        NoteId = c.Int(nullable: false, identity: true),
+                        Timestamp = c.DateTime(nullable: false),
+                        Content = c.String(),
+                        StudentId = c.Int(nullable: false),
+                        AssignmentId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.NoteId)
+                .ForeignKey("dbo.Assignments", t => t.AssignmentId, cascadeDelete: true)
+                .ForeignKey("dbo.Students", t => t.StudentId, cascadeDelete: true)
+                .Index(t => t.StudentId)
+                .Index(t => t.AssignmentId);
+            
+            CreateTable(
                 "dbo.Resources",
                 c => new
                     {
@@ -235,6 +251,8 @@ namespace PortalToKnowledge.Migrations
             DropForeignKey("dbo.Resources", "ZipcodeId", "dbo.Zipcodes");
             DropForeignKey("dbo.Resources", "StateId", "dbo.States");
             DropForeignKey("dbo.Resources", "CityId", "dbo.Cities");
+            DropForeignKey("dbo.Notes", "StudentId", "dbo.Students");
+            DropForeignKey("dbo.Notes", "AssignmentId", "dbo.Assignments");
             DropForeignKey("dbo.Assignments", "MediaTypeId", "dbo.MediaTypes");
             DropForeignKey("dbo.Assignments", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.Progresses", "StudentId", "dbo.Students");
@@ -254,6 +272,8 @@ namespace PortalToKnowledge.Migrations
             DropIndex("dbo.Resources", new[] { "ZipcodeId" });
             DropIndex("dbo.Resources", new[] { "StateId" });
             DropIndex("dbo.Resources", new[] { "CityId" });
+            DropIndex("dbo.Notes", new[] { "AssignmentId" });
+            DropIndex("dbo.Notes", new[] { "StudentId" });
             DropIndex("dbo.Progresses", new[] { "AssignmentId" });
             DropIndex("dbo.Progresses", new[] { "StudentId" });
             DropIndex("dbo.Students", new[] { "ApplicationUserId" });
@@ -272,6 +292,7 @@ namespace PortalToKnowledge.Migrations
             DropTable("dbo.Zipcodes");
             DropTable("dbo.States");
             DropTable("dbo.Resources");
+            DropTable("dbo.Notes");
             DropTable("dbo.Cities");
             DropTable("dbo.MediaTypes");
             DropTable("dbo.Progresses");

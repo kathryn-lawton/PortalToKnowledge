@@ -43,6 +43,10 @@ foreach (var item in Model.Student.Courses)
 }
 }
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Student.StudentId }) 
-</p>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Student.StudentId })
+        @if (User.IsInRole("Instructor"))
+        {
+            @Html.ActionLink("Back To Students", "ViewStudents", "Instructors")
+        }
+    </p>
