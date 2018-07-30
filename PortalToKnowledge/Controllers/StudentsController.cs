@@ -41,7 +41,7 @@ namespace PortalToKnowledge.Controllers
 				student.ApplicationUserId = User.Identity.GetUserId();
 				db.Student.Add(student);
 				db.SaveChanges();
-				return RedirectToAction("Index");
+				return RedirectToAction("Details");
 			}
 
 			return View(student);

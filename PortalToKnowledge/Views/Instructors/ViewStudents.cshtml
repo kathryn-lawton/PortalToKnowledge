@@ -33,8 +33,8 @@
                     <div class="progress">
                         <div class="progress-bar progress-bar-info" style="width: @Model.CourseStudentProgress[item.CourseId][student.StudentId]%;"></div>
                     </div>
-                    @Html.ActionLink("Details", "Details", "Students", new { id = student.StudentId}, null) |
-                    @Html.ActionLink("Remove", "RemoveStudent", "Courses", new { id = student.StudentId }, null)
+                    @Html.ActionLink("Details", "Details", "Students", new { id = student.StudentId }, null) |
+                    @Html.ActionLink("Remove", "RemoveStudent", "Courses", new { studentId = student.StudentId, courseId = item.CourseId }, null)
                 </li>
             }
             </ul>

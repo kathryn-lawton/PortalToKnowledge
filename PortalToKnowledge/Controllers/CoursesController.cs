@@ -114,10 +114,31 @@ namespace PortalToKnowledge.Controllers
             base.Dispose(disposing);
         }
 
-		[HttpPost]
-		public ActionResult RemoveStudent(int? id)
+		[HttpGet]
+		public ActionResult RemoveStudent(int? studentId, int? courseId)
 		{
-			return RedirectToAction("Index"); // TODO: implement removing student from a class
+			if(studentId == null || courseId == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var model = new StudentCourseViewModel()
+			{
+				CourseId = courseId.Value,
+				StudentId = studentId.Value
+			};
+
+			return View(model);
+		}
+
+		[HttpPost]
+		public ActionResult RemoveStudent(StudentCourseViewModel model)
+		{
+			var course = db.Course.Where(c => c.CourseId == model.CourseId).FirstOrDefault();
+			var student = db.Student.Where(s => s.StudentId == model.StudentId).FirstOrDefault();
+			course.Students.Remove(student);
+			db.SaveChanges();
+			return RedirectToAction("ViewStudents", "Instructor", null); 
 		}
 
 		[HttpGet]
@@ -128,7 +149,7 @@ namespace PortalToKnowledge.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 
-			var model = new AddStudentViewModel()
+			var model = new StudentCourseViewModel()
 			{
 				CourseId = id.Value
 			};
@@ -150,7 +171,7 @@ namespace PortalToKnowledge.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult AddStudent([Bind(Include = "CourseId,StudentId")] AddStudentViewModel model)
+		public ActionResult AddStudent([Bind(Include = "CourseId,StudentId")] StudentCourseViewModel model)
 		{
 			if(model == null)
 			{

@@ -23,7 +23,7 @@ namespace PortalToKnowledge
 					  "~/Scripts/bootstrap.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css").Include(
-					  "~/Content/bootstrap-journal.css",
+					  "~/Content/bootstrap-cosmo.css",
 					  "~/Content/site.css"));
 		}
 	}

@@ -3,7 +3,7 @@
     ViewBag.Title = "ViewAssignment";
 }
 
-<h2>ViewAssignment</h2>
+<h2>Current Assignment</h2>
 
 @if (Model.MediaType.Type == "Video")
 {
@@ -61,7 +61,7 @@
 }
 else
 {
-    <div>This will be the document</div>
+    <iframe src="https://docs.google.com/document/d/1r1Hx9LBoNOskGEhoovQTsp72lY4QxdZr2cAA22dgShA/edit?usp=sharing" style="height:500px; width:100%;"></iframe>
 }
 
 @using (Html.BeginForm())

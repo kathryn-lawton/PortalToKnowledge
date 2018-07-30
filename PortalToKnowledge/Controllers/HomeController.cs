@@ -19,16 +19,19 @@ namespace PortalToKnowledge.Controllers
 			{
 				var currentUserId = User.Identity.GetUserId();
 				var foundStudent = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
-				foreach(var courses in foundStudent.Courses)
+				if(foundStudent != null)
 				{
-					foreach(var assignment in courses.Assignments)
+					foreach (var courses in foundStudent.Courses)
 					{
-						DateTime dueDate = DateTime.Parse(assignment.DueDate);
-						var timeLeft = dueDate - DateTime.Now;
-
-						if(timeLeft.Days < 2)
+						foreach (var assignment in courses.Assignments)
 						{
-							assignmentsDue.Add(assignment);
+							DateTime dueDate = DateTime.Parse(assignment.DueDate);
+							var timeLeft = dueDate - DateTime.Now;
+
+							if (timeLeft.Days < 2)
+							{
+								assignmentsDue.Add(assignment);
+							}
 						}
 					}
 				}
