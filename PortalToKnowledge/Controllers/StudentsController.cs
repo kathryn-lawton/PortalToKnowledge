@@ -217,5 +217,28 @@ namespace PortalToKnowledge.Controllers
 
 			return RedirectToAction("Courses");
 		}
+
+		[HttpPost]
+		public ActionResult ViewAssignment(Note model)
+		{
+			if (model == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var currentUserId = User.Identity.GetUserId();
+			var foundStudent = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
+
+			if (foundStudent == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
+			var progress = db.Progress.Where(p => p.AssignmentId == model.AssignmentId && p.StudentId == foundStudent.StudentId).FirstOrDefault();
+			progress.Status = true;
+			db.SaveChanges();
+
+			return RedirectToAction("Courses");
+		}
 	}
 }

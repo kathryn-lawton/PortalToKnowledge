@@ -12,6 +12,8 @@ namespace PortalToKnowledge.Models
 		[Key]
 		public int ResourceId { get; set; }
 		public string Name { get; set; }
+
+		[Display(Name = "Street Address")]
 		public string StreetAddress { get; set; }
 
 		[ForeignKey("City")]

@@ -13,6 +13,7 @@ namespace PortalToKnowledge.Models
 		{
 			this.Courses = new HashSet<Course>();
 			this.Progresses = new HashSet<Progress>();
+			this.Notes = new HashSet<Note>();
 		}
 
 		[Key]
@@ -30,6 +31,6 @@ namespace PortalToKnowledge.Models
 
 		public virtual ICollection<Course> Courses { get; set; }
 		public virtual ICollection<Progress> Progresses { get; set; }
-
+		public virtual ICollection<Note> Notes { get; set; }
 	}
 }

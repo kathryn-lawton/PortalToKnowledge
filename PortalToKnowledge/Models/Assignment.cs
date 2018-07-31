@@ -9,6 +9,10 @@ namespace PortalToKnowledge.Models
 {
 	public class Assignment
 	{
+		public Assignment()
+		{
+			this.Notes = new HashSet<Note>();
+		}
 		[Key]
 		public int AssignmentId { get; set; }
 
@@ -26,5 +30,7 @@ namespace PortalToKnowledge.Models
 		[ForeignKey("Course")]
 		public int CourseId { get; set; }
 		public Course Course { get; set; }
+
+		public virtual ICollection<Note> Notes { get; set; }
 	}
 }
