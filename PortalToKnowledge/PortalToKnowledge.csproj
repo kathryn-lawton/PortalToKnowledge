@@ -392,6 +392,7 @@
     <Content Include="Views\Notes\Details.cshtml" />
     <Content Include="Views\Notes\Edit.cshtml" />
     <Content Include="Views\Notes\Index.cshtml" />
+    <Compile Include="ViewModels\AssignmentNoteViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

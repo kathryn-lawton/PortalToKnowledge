@@ -191,54 +191,71 @@ namespace PortalToKnowledge.Controllers
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 
+			var currentUserId = User.Identity.GetUserId();
+			var foundStudent = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
+
+			if (foundStudent == null)
+			{
+				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+			}
+
 			var assignment = db.Assignment.Where(a => a.AssignmentId == id).Include(a => a.MediaType).FirstOrDefault();
-			return View(assignment);
+			var note = new Note()
+			{
+				StudentId = foundStudent.StudentId,
+				AssignmentId = assignment.AssignmentId
+			};
+			var model = new AssignmentNoteViewModel()
+			{
+				Assignment = assignment,
+				Note = note
+			};
+			return View(model);
 		}
 
 		[HttpPost]
-		public ActionResult ViewAssignment(Assignment model)
+		public ActionResult ViewAssignment(AssignmentNoteViewModel model)
 		{
 			if(model == null)
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
 
-			var currentUserId = User.Identity.GetUserId();
-			var foundStudent = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
-
-			if (foundStudent == null)
+			if(model.Note == null)
 			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				var currentUserId = User.Identity.GetUserId();
+				var foundStudent = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
+
+				if (foundStudent == null)
+				{
+					return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+				}
+
+				var progress = db.Progress.Where(p => p.AssignmentId == model.Assignment.AssignmentId && p.StudentId == foundStudent.StudentId).FirstOrDefault();
+				progress.Status = true;
+				db.SaveChanges();
+
+				return RedirectToAction("Courses");
 			}
+			else
+			{
+				model.Note.Timestamp = DateTime.Now;
+				db.Note.Add(model.Note);
+				db.SaveChanges();
+				var newNote = new Note()
+				{
+					AssignmentId = model.Note.AssignmentId,
+					StudentId = model.Note.StudentId
+				};
+				model.Note = newNote;
 
-			var progress = db.Progress.Where(p => p.AssignmentId == model.AssignmentId && p.StudentId == foundStudent.StudentId).FirstOrDefault();
-			progress.Status = true;
-			db.SaveChanges();
+				var assignment = db.Assignment.Where(a => a.AssignmentId == newNote.AssignmentId).Include(a => a.MediaType).FirstOrDefault();
+				model.Assignment = assignment;
+				model.Note.Content = null;
 
-			return RedirectToAction("Courses");
+				return View(model);
+			}
 		}
 
-		[HttpPost]
-		public ActionResult ViewAssignment(Note model)
-		{
-			if (model == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
-
-			var currentUserId = User.Identity.GetUserId();
-			var foundStudent = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
-
-			if (foundStudent == null)
-			{
-				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-			}
-
-			var progress = db.Progress.Where(p => p.AssignmentId == model.AssignmentId && p.StudentId == foundStudent.StudentId).FirstOrDefault();
-			progress.Status = true;
-			db.SaveChanges();
-
-			return RedirectToAction("Courses");
-		}
 	}
 }
