@@ -6,21 +6,17 @@
 
 <h2>Tasks</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
 <table class="table">
     @foreach (var taskList in Model.TaskLists)
     {
-        <th>
-            @taskList.Title
-        </th>   
+    <th>
+        @taskList.Title @Html.ActionLink("Add Task", "AddTask", new { id = taskList.Id })
+    </th>   
         foreach (var task in Model.TasksMap[taskList.Id])
         {
                     <tr>
                         <td>
-                            @task.Status | @task.Title | @task.Notes | @task.Due
+                            @task.Title | @task.Notes | @task.Due
                         </td>
                     </tr>    
         }

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
@@ -76,17 +77,56 @@ namespace PortalToKnowledge.Controllers
 			return View(model);
 		}
 
-		//public ActionResult AddTask()
-		//{
-		//	if(User.IsInRole("Instructor"))
-		//	{
-		//		Task task = new Task { Title = "New Task" };
-		//		task.Notes = "Please complete me";
-		//		task.Due = "2018-08-15T12:00:00.000Z";
+		[HttpGet]
+		public ActionResult AddTask(string id)
+		{
+			if (User.IsInRole("Instructor"))
+			{
+				Task task = new Task();
+				CreateTaskViewModel model = new CreateTaskViewModel()
+				{
+					TaskListId = id,
+					Task = task
+				};
+				return View(model);
+			}
+			return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+		}
 
-		//		Task result = service.Tasks.Insert(task, "@default").Fetch();
-		//		Console.WriteLine(result.Title);
-		//	}
-		//}
+
+		[HttpPost]
+		public ActionResult AddTask(CreateTaskViewModel model)
+		{
+			if (User.IsInRole("Instructor"))
+			{
+				UserCredential credential;
+
+				using (var stream =
+					new FileStream("C:\\Users\\klawt\\source\\repos\\GoogleTasksTest\\GoogleTasksTest\\bin\\Debug\\Properties\\client_id.json", FileMode.Open, FileAccess.Read))
+				{
+					string credPath = "C:\\Users\\klawt\\source\\repos\\GoogleTasksTest\\GoogleTasksTest\\bin\\Debug\\token.json";
+					credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+						GoogleClientSecrets.Load(stream).Secrets,
+									new string[] { TasksService.Scope.Tasks },
+									"user",
+									CancellationToken.None,
+									new FileDataStore(credPath, true)).Result;
+					Console.WriteLine("Credential file saved to: " + credPath);
+				}
+
+				// Create Google Tasks API service.
+				var service = new TasksService(new BaseClientService.Initializer()
+				{
+					HttpClientInitializer = credential,
+					ApplicationName = ApplicationName,
+				});
+
+				model.Task.Due = DateTime.Now.AddDays(7);
+
+				Task result = service.Tasks.Insert(model.Task, model.TaskListId).Execute();
+				return RedirectToAction("GoogleTasks");
+			}
+			return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+		}
 	}
 }
