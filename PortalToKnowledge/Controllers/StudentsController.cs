@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -47,7 +48,7 @@ namespace PortalToKnowledge.Controllers
 			return View(student);
 		}
 
-		public ActionResult Details(int? id)
+		public async Task<ActionResult> Details(int? id)
 		{
 			Student student;
 			if (id == null)
@@ -76,7 +77,7 @@ namespace PortalToKnowledge.Controllers
 
 				foreach (var assignment in course.Assignments)
 				{
-					var progress = db.Progress.Where(p => p.StudentId == student.StudentId && p.AssignmentId == assignment.AssignmentId).FirstOrDefault();
+					var progress = await db.Progress.Where(p => p.StudentId == student.StudentId && p.AssignmentId == assignment.AssignmentId).FirstOrDefaultAsync();
 					if(progress.Status)
 					{
 						completedAssignments++;

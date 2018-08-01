@@ -3,6 +3,7 @@ using Google.Apis.Services;
 using Google.Apis.Tasks.v1;
 using Google.Apis.Tasks.v1.Data;
 using Google.Apis.Util.Store;
+using PortalToKnowledge.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +16,7 @@ namespace PortalToKnowledge.Controllers
 {
     public class GoogleTasksController : Controller
     {
-		static string[] Scopes = { TasksService.Scope.TasksReadonly };
+		static string[] Scopes = { TasksService.Scope.Tasks };
 		static string ApplicationName = "Portal To Knowledge";
 
 		// GET: GoogleTasks
@@ -56,17 +57,36 @@ namespace PortalToKnowledge.Controllers
 			// List task lists.
 			
 			IList<TaskList> taskLists = listRequest.Execute().Items;
-			List<IList<Task>> tasks = new List<IList<Task>>();
 
+			Dictionary<string, IList<Task>> taskMap = new Dictionary<string, IList<Task>>();
 
 			foreach (var taskList in taskLists)
 			{
 				var request = service.Tasks.List(taskList.Id);
-				var taskListsList = request.Execute().Items;
-				tasks.Add(taskListsList);
+				var tasksList = request.Execute().Items;
+				taskMap.Add(taskList.Id, tasksList);
 			}
 
-			return View(tasks);
+			TaskListTaskViewModel model = new TaskListTaskViewModel()
+			{
+				TaskLists = taskLists,
+				TasksMap = taskMap
+			};
+
+			return View(model);
 		}
+
+		//public ActionResult AddTask()
+		//{
+		//	if(User.IsInRole("Instructor"))
+		//	{
+		//		Task task = new Task { Title = "New Task" };
+		//		task.Notes = "Please complete me";
+		//		task.Due = "2018-08-15T12:00:00.000Z";
+
+		//		Task result = service.Tasks.Insert(task, "@default").Fetch();
+		//		Console.WriteLine(result.Title);
+		//	}
+		//}
 	}
 }

@@ -16,7 +16,7 @@ namespace PortalToKnowledge.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Notes
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
 			var currentUserId = User.Identity.GetUserId();
 			var currentStudent = db.Student.Where(s => s.ApplicationUserId == currentUserId).FirstOrDefault();
@@ -24,7 +24,7 @@ namespace PortalToKnowledge.Controllers
 			{
 				return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 			}
-			var test = currentStudent.Notes.ToList();
+			//var test = currentStudent.Notes.ToList();
 			var notes = db.Note.Where(n => n.StudentId == currentStudent.StudentId).Include(n => n.Assignment).Include(n => n.Student).ToList();
             return View(notes);
         }

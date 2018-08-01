@@ -251,9 +251,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Keys.cs" />
-    <Compile Include="Migrations\201807301547214_initialmigration.cs" />
-    <Compile Include="Migrations\201807301547214_initialmigration.Designer.cs">
-      <DependentUpon>201807301547214_initialmigration.cs</DependentUpon>
+    <Compile Include="Migrations\201807311606575_ad-migration initial-migratn.cs" />
+    <Compile Include="Migrations\201807311606575_ad-migration initial-migratn.Designer.cs">
+      <DependentUpon>201807311606575_ad-migration initial-migratn.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -277,6 +277,7 @@
     <Compile Include="ViewModels\InstructorCourseViewModel.cs" />
     <Compile Include="ViewModels\QuizletResponse.cs" />
     <Compile Include="ViewModels\StudentViewModel.cs" />
+    <Compile Include="ViewModels\TaskListTaskViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-journal.css" />
@@ -393,6 +394,8 @@
     <Content Include="Views\Notes\Edit.cshtml" />
     <Content Include="Views\Notes\Index.cshtml" />
     <Compile Include="ViewModels\AssignmentNoteViewModel.cs" />
+    <Content Include="Views\Admins\Instructors.cshtml" />
+    <Content Include="Views\Admins\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -411,8 +414,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807301547214_initialmigration.resx">
-      <DependentUpon>201807301547214_initialmigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807311606575_ad-migration initial-migratn.resx">
+      <DependentUpon>201807311606575_ad-migration initial-migratn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
