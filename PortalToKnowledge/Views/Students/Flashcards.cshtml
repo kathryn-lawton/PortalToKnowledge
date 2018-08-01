@@ -1,16 +1,30 @@
 ﻿@model PortalToKnowledge.ViewModels.QuizletResponse
+<center>
+    <h2><strong>Flashcards</strong></h2>
+</center>
+<br />
 
-<h2>Flashcards</h2>
-
-<div>
-    @foreach (var item in Model.terms)
-    {
-        <div class="card text-white bg-primary btn-group mb-3" style="max-width: 20rem;">
-            <div class="card-header"></div>
-            <div class="card-body">
-                <h4 class="card-title"> @Html.DisplayFor(modelItem => item.term)</h4>
+@foreach (var item in Model.terms)
+{
+    <div class="card-deck" style="padding-left:25em; padding-right:25em">
+        <div class="card bg-primary">
+            <div class="card-body text-center">
+                <h4 class="card-title"><strong>@Html.DisplayFor(modelItem => item.term)</strong></h4>
                 <p class="card-text">@Html.DisplayFor(modelItem => item.definition)</p>
             </div>
         </div>
-    }
+    </div>
+    <br />
+}
+
+<div>
+    @Html.ActionLink("Back to Courses", "Courses", "Students")
 </div>
+
+
+
+
+
+
+
+

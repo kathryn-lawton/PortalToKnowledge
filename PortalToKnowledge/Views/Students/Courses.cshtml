@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Courses</h2>
 
 <table class="table">
     <tr>
@@ -38,8 +38,7 @@
                 @Html.ActionLink("Details", "Details", "Courses", new { id = item.CourseId }, null) |
                 @Html.ActionLink("Flashcards", "Flashcards", new { id = item.CourseId }) |
                 @Html.ActionLink("Notes", "Index", "Notes", new { id = item.CourseId }, null) |
-                @Html.ActionLink("Additional Resources", "Index", "Resources", new { id = item.CourseId }, null) |
-                @Html.ActionLink("Assignments", "Index", "Assignments", new { id = item.CourseId }, null) 
+                @Html.ActionLink("Additional Resources", "Index", "Resources", new { id = item.CourseId }, null) 
             </td>
         </tr>
     }

@@ -7,6 +7,7 @@
 <h2>Students</h2>
 
 <table class="table">
+    @Html.ActionLink("Create", "Create", "Students")
     <tr>
         <th>
             Courses
@@ -19,30 +20,31 @@
 
     @foreach (var item in Model.Courses)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            <ul>
-            @foreach(var student in item.Students)
-            {
-                <li>
-                    @student.FirstName
-                    @student.LastName 
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-info" style="width: @Model.CourseStudentProgress[item.CourseId][student.StudentId]%;"></div>
-                    </div>
-                    @Html.ActionLink("Details", "Details", "Students", new { id = student.StudentId }, null) |
-                    @Html.ActionLink("Remove", "RemoveStudent", "Courses", new { studentId = student.StudentId, courseId = item.CourseId }, null)
-                </li>
-            }
-            </ul>
-        </td>
-        <td>    
-            @Html.ActionLink("Add Student", "AddStudent", "Courses", new { id = item.CourseId }, null)
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <ul>
+                    @foreach (var student in item.Students)
+                    {
+                        <li>
+                            @student.FirstName
+                            @student.LastName
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-info" style="width: @Model.CourseStudentProgress[item.CourseId][student.StudentId]%;"></div>
+                            </div>
+                            @Html.ActionLink("Details", "Details", "Students", new { id = student.StudentId }, null) |
+                            @Html.ActionLink("Edit", "Edit", "Students", new { id = student.StudentId }, null) |
+                            @Html.ActionLink("Remove", "RemoveStudent", "Courses", new { studentId = student.StudentId, courseId = item.CourseId }, null)
+                        </li>
+                    }
+                </ul>
+            </td>
+            <td>
+                @Html.ActionLink("Add Student", "AddStudent", "Courses", new { id = item.CourseId }, null)
+            </td>
+        </tr>
     }
 
 </table>

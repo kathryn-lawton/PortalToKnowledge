@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Class Resources</h2>
 
 @if (User.IsInRole("Instructor"))
 {
@@ -51,11 +51,32 @@
             @Html.DisplayFor(modelItem => item.StreetAddress)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ResourceId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ResourceId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ResourceId })
+
+            @Html.ActionLink("Details", "Details", new { id = item.ResourceId })
+            <br />
+
+            @if (User.IsInRole("Instructor"))
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.ResourceId }) <br />
+                @Html.ActionLink("Delete", "Delete", new { id = item.ResourceId }) 
+            }
         </td>
     </tr>
 }
 
 </table>
+
+@if(User.IsInRole("Student"))
+{
+<div>
+    @Html.ActionLink("Back To Courses", "Courses", "Students")
+</div>
+}
+
+@if(User.IsInRole("Instructor"))
+{
+<div>
+    @Html.ActionLink("Back To Courses", "ViewCourses", "Instructors")
+</div>
+}
+

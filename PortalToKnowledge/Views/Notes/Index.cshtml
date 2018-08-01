@@ -22,22 +22,26 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Assignment.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Timestamp)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.NoteId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.NoteId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.NoteId })
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Assignment.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Timestamp)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.NoteId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.NoteId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.NoteId })
+            </td>
+        </tr>
     }
 
 </table>
+
+<div>
+    @Html.ActionLink("Back To Courses", "Courses", "Students")
+</div>

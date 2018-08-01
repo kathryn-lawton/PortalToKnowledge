@@ -5,12 +5,12 @@
 
 
 <div>
-    <img src="~/Images/staircase.jpg" class="center" width="100%" /> 
+    <img src="~/Images/staircase.jpg" class="center" width="100%" />
 </div>
 
-@foreach(var assignment in Model)
+@foreach (var assignment in Model)
 {
-    <script>    
+    <script>
         alert("@assignment.Name is due soon!");
     </script>
 }

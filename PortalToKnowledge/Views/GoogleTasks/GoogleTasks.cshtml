@@ -1,24 +1,34 @@
 ﻿@model PortalToKnowledge.ViewModels.TaskListTaskViewModel
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Tasks</h2>
-
-<table class="table">
+<center>
+    <h2><strong>Tasks</strong></h2>
+</center>
+<br />
+<div class="list-group">
     @foreach (var taskList in Model.TaskLists)
     {
-    <th>
-        @taskList.Title @Html.ActionLink("Add Task", "AddTask", new { id = taskList.Id })
-    </th>   
+        <a href="#" class="list-group-item list-group-item-action active">
+            <h4><strong>@taskList.Title</strong> </h4>
+        </a>
+        <br />
+        if (User.IsInRole("Instructor"))
+        {
+            <div>
+                <h5>@Html.ActionLink("Add Task", "AddTask", new { id = taskList.Id })</h5>
+                <br />
+            </div>
+        }
         foreach (var task in Model.TasksMap[taskList.Id])
         {
-                    <tr>
-                        <td>
-                            @task.Title | @task.Notes | @task.Due
-                        </td>
-                    </tr>    
+            <a href="#" class="list-group-item list-group-item-action">
+                <h5>@task.Title | @task.Notes | @task.Due</h5>
+            </a>
+            <br />
         }
     }
-</table>
+</div>
+
+@if (User.IsInRole("Instructor"))
+{
+    @Html.ActionLink("Back to Courses", "ViewCourses", "Instructors")
+}

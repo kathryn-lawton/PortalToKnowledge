@@ -355,7 +355,6 @@
     <Content Include="Views\Students\Details.cshtml" />
     <Content Include="Views\Students\Courses.cshtml" />
     <Content Include="Views\Students\Flashcards.cshtml" />
-    <Content Include="Views\Students\Notes.cshtml" />
     <Content Include="Views\Instructors\CreateCourse.cshtml" />
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Courses\Delete.cshtml" />

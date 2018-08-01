@@ -59,11 +59,11 @@
     <style>
         #map {
             height: 400px;
-            width: 400px;
+            width: 400px;    
         }
     </style>
 
-    <div id="map"></div>
+  <div id="map"></div>
     <script>
         function findAddress() {
             var xmlhttp = new XMLHttpRequest();
@@ -94,8 +94,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=@Keys.GOOGLEMAPS_API_KEY&callback=findAddress"
             async defer></script>
 </div>
-
+<br />
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ResourceId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Resources", "Index")
 </p>
