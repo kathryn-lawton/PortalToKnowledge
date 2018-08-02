@@ -17,6 +17,7 @@ namespace PortalToKnowledge.Models
 
 		[Key]
 		public int CourseId { get; set; }
+		[Display(Name = "Course Name")]
 		public string Name { get; set; }
 
 		[ForeignKey("Instructor")]

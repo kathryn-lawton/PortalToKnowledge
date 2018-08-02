@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Instructors</h4>
+    <h4>Instructor</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -38,8 +38,13 @@
     </tr>
 }
 
-<p>
-    <br>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.InstructorId }) |
-    @Html.ActionLink("Instructors", "Index")
-</p>
+    <p>
+        <br>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.InstructorId }) 
+        <br />
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Instructors", "Index")
+        }
+
+    </p>

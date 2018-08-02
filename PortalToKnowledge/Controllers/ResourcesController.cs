@@ -110,8 +110,9 @@ namespace PortalToKnowledge.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Resource resource = db.Resource.Find(id);
-            if (resource == null)
+			Resource resource = db.Resource.Where(r => r.ResourceId == id).Include(c => c.City).Include(c => c.State).Include(c => c.Zipcode).FirstOrDefault();
+
+			if (resource == null)
             {
                 return HttpNotFound();
             }
@@ -123,8 +124,8 @@ namespace PortalToKnowledge.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Resource resource = db.Resource.Find(id);
-            db.Resource.Remove(resource);
+			Resource resource = db.Resource.Where(r => r.ResourceId == id).Include(c => c.City).Include(c => c.State).Include(c => c.Zipcode).FirstOrDefault();
+			db.Resource.Remove(resource);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

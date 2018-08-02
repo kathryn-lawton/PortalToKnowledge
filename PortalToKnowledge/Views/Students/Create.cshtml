@@ -60,6 +60,10 @@
         @Html.ActionLink("Profile", "Details")
     </div>
 }
-<div>
-    @Html.ActionLink("Back to Students", "ViewStudents", "Instructors")
-</div>
+@if(User.IsInRole("Instructor"))
+{
+    <div>
+        @Html.ActionLink("Back to Students", "ViewStudents", "Instructors")
+    </div>
+}
+
